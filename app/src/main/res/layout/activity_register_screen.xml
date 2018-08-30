@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"></include>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_first_name"
+                    style="@style/Edit_Registeration"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:hint="@string/firstName"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_last_name"
+                    style="@style/Edit_Registeration"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:hint="@string/lastName"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_email"
+                    style="@style/Edit_Registeration"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:hint="@string/your_email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    style="@style/Edit_Registeration"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+                    android:hint="@string/phone"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/largehight"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    style="@style/Edit_Registeration"
+                    android:background="@drawable/shape"
+                    android:hint="@string/address" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Edit_Registeration"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textView6"
+                    android:fontFamily="fonts/ProximaNova-Light.otf"
+                    android:text="Choose Service Area"
+                    android:textSize="@dimen/text_normal" />
+
+                <Spinner
+                    android:id="@+id/spinner_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="right" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/et_new_password"
+                style="@style/Edit_Registeration"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/shape"
+                android:hint="@string/newPassword"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/et_promo_code"
+                style="@style/Edit_Registeration"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape"
+                android:hint="@string/promo_code"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
+
+
+            <TextView
+                android:id="@+id/btn_register"
+                style="@style/PressBoxButton"
+                android:gravity="center"
+                android:text="@string/register" />
+
+            <TextView
+                android:id="@+id/tw_to_login"
+                style="@style/Orange_link_text"
+                android:text="@string/Register_existuser" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tw_to_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_and_condition" />
+
+                <TextView
+                    android:id="@+id/tc_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="fonts/ProximaNova-Semibold.otf"
+                    android:text="@string/tc_button_text"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_normal" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

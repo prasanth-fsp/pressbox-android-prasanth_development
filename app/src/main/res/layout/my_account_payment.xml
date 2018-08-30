@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_layout_payment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/My_account_textView"
+        android:text="Payment" />
+
+    <LinearLayout
+        android:id="@+id/relative_layout_current_card_number"
+        style="@style/Custom_relative_layout"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/im_card1"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/card" />
+
+        <TextView
+            android:id="@+id/tw_my_account_visa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/im_card1"
+            android:layout_weight="1"
+            android:fontFamily="fonts/ProximaNova-Light.otf"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_toEndOf="@+id/tw_my_account_visa"
+            android:fontFamily="fonts/ProximaNova-Semibold.otf"
+            android:gravity="center_vertical"
+            android:text="***4858"
+            android:textColor="@color/text_light"
+            android:textSize="@dimen/text_normal"
+            android:id="@+id/tw_my_account_last_four_card_numbers" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout style="@style/Custom_relative_layout">
+
+            <ImageView
+                android:id="@+id/im_card"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/card" />
+
+            <TextView
+                android:id="@+id/tw_my_account_payment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/im_card"
+                android:fontFamily="fonts/ProximaNova-Light.otf"
+                android:gravity="center_vertical"
+                android:text="Add a card"
+                android:textSize="@dimen/text_normal"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/credit_card_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/im_card"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/credit_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="fonts/ProximaNova-Light.otf"
+                    android:hint="Card Number"
+                    android:inputType="number"
+                    android:textSize="@dimen/text_normal" />
+
+                <EditText
+                    android:id="@+id/credit_card_date"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="fonts/ProximaNova-Light.otf"
+                    android:hint="MM/YY"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textSize="@dimen/text_normal" />
+
+                <EditText
+                    android:id="@+id/credit_card_CVV"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="fonts/ProximaNova-Light.otf"
+                    android:hint="CVV"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textSize="@dimen/text_normal" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+
+    <EditText
+        android:id="@+id/et_my_account_promo_code"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="65dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="fonts/ProximaNova-Light.otf"
+        android:hint="Promo Code"
+        android:textSize="@dimen/text_normal" />
+
+</LinearLayout>

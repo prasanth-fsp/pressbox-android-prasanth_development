@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver_light"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <include
+                android:id="@+id/tool_bar"
+                layout="@layout/toolbar_select"
+           ></include>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/fab_margin"
+                android:visibility="gone"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Place a new order"
+                android:visibility="gone"
+                android:textColor="@color/text_light"
+                android:layout_gravity="center_horizontal" />
+            <ListView
+                android:id="@+id/lw_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:divider="#00000000"
+                android:dividerHeight="10dp"
+                android:layout_weight="0.48">
+
+            </ListView>
+
+            <ImageView
+                android:id="@+id/btn_contact_support"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/contactbtn"
+                />
+       <!--     <TextView
+                android:id="@+id/btn_contact_support"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="75dp"
+                android:background="@drawable/shape"
+                android:text="Contact Support"
+                android:textColor="@color/text_light"
+                android:layout_gravity="right" />-->
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <include layout="@layout/place_order_button" />
+
+</android.support.design.widget.CoordinatorLayout>

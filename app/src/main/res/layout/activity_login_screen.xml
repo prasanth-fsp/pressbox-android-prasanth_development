@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <EditText
+            android:id="@+id/et_username"
+            style="@style/Edit_Registeration"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape"
+            android:hint="@string/your_email" />
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/Edit_Registeration"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            style="@style/Edit_Registeration"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textView6"
+                android:text="Choose Service Area"
+                android:textSize="@dimen/text_normal"
+                android:fontFamily="fonts/ProximaNova-Light.otf"/>
+
+            <Spinner
+                android:id="@+id/spinner_city"
+                android:layout_height="55dp"
+                android:layout_width="match_parent"
+                android:gravity="right"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/btn_sign_in"
+            style="@style/PressBoxButton"
+            android:text="@string/sign_in" />
+
+        <TextView
+            android:id="@+id/tw_forgot_password"
+            style="@style/Orange_link_text"
+            android:text="@string/forgotpassword" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,34 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="commonSpace">10dp</dimen>
+    <dimen name="commonMargin20">20dp</dimen>
+    <dimen name="commonMargin15">15dp</dimen>
+    <dimen name="commonMargin30">30dp</dimen>
+    <dimen name="commonMargin5">5dp</dimen>
+    <dimen name="largehight">50dp</dimen>
+    <dimen name="textsize">15sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="toolbar_title">18sp</dimen>
+    <dimen name="text_xsmall">8sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">13sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_large">15sp</dimen>
+    <dimen name="text_medium1">16sp</dimen>
+    <dimen name="text_xlarge">19sp</dimen>
+    <dimen name="text_xxlarge">30sp</dimen>
+    <dimen name="text_large_common">25sp</dimen>
+    <dimen name="text_medium_common">22sp</dimen>
+    <dimen name="text_medium2">20sp</dimen>
+
+
+    <!--Order Screen-->
+    <dimen name="place_order_button_text_size">16sp</dimen>
+
+
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/commonSpace"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:fontFamily="fonts/ProximaNova-Regular.otf"
+            android:textColor="@color/pressbox"
+            android:textSize="@dimen/text_medium1"
+            android:textStyle="normal" />
+
+
+
+</LinearLayout>

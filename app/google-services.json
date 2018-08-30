@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "393220295564",
+    "firebase_url": "https://pressbox-cd4e3.firebaseio.com",
+    "project_id": "pressbox-cd4e3",
+    "storage_bucket": "pressbox-cd4e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393220295564:android:1b53fb43a5c4703e",
+        "android_client_info": {
+          "package_name": "com.usepressbox.pressbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393220295564-oov2dtjjtlh45an54ghl6gf58q3altvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.usepressbox.pressbox",
+            "certificate_hash": "05dd9eacc43175537df37bc05aeec5b38f50eab9"
+          }
+        },
+        {
+          "client_id": "393220295564-v7l3l1cii687o07htb78uip5h70tk5j3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.usepressbox.pressbox",
+            "certificate_hash": "a591f5798e02fbed9e4d2b5de3fd45c57882f0de"
+          }
+        },
+        {
+          "client_id": "393220295564-6nt7u6892eeiih06d8e9vkuisam6hkb0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY4mu-RtZnfk4k4-LommsP2huNYS9HgtU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393220295564-6nt7u6892eeiih06d8e9vkuisam6hkb0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

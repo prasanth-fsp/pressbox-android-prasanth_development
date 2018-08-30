@@ -1,0 +1,163 @@
+<resources>
+    <string name="app_name">Pressbox</string>
+    <string name="ok">OK</string>
+    <!-- Landing Screen -->
+    <string name="pressbox">p r e s s b o x</string>
+    <string name="clearExp">A Cleaner Experience</string>
+
+    <!-- detergent code -->
+    <string name="gain">3616</string>
+    <string name="tide">3117</string>
+    <string name="charlies">3110</string>
+
+    <!-- bleach -->
+    <string name="bleach_on">3114</string>
+    <string name="bleach_off">8371</string>
+
+    <!-- dryer sheets -->
+    <string name="dryer_sheet_on">2809</string>
+    <string name="dryer_sheet_off">2811</string>
+
+    <!-- fabric -->
+    <string name="fabric_on">11544</string>
+    <string name="fabric_off">11545</string>
+
+    <!-- RegisterScreen  -->
+    <string name="Register">Register</string>
+    <string name="Register_existuser">Already have an account?</string>
+    <string name="getStarted">Get Started</string>
+    <string name="firstName">"First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="email">Email Adress</string>
+    <string name="phone">Phone Number</string>
+    <string name="promo_code">Promo code</string>
+    <string name="newPassword">Password</string>
+    <string name="city">City</string>
+    <string name="register">Register</string>
+    <string name="signin">Signin</string>
+    <string name="forgotpassword">Forgot Password?</string>
+    <string name="registeration_validation">please enter valid email address or password</string>
+    <string name="no_net">Looks like you don\'t have a network signal! Please reconnect </string>
+    <string name="password_validation">Enter password more than five  characters</string>
+    <string name="spinner_title">Title</string>
+    <string name="enter_password">Enter password</string>
+    <string name="terms_and_condition">By registering, you agree to the</string>
+    <string name="tc_button_text">Terms and Conditions</string>
+
+    <!-- label  -->
+    <string name="title_activity_login">Welcome Back</string>
+    <string name="title_activity_registeration">Get Started</string>
+    <string name="title_activity_forgotpassword">Forgot Password</string>
+    <string name="title_activity_neworder">New Order</string>
+    <string name="title_activity_locker">Locker</string>
+
+    <!-- Login Screen  -->
+    <string name="invalid_username">Wrong username or password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="send_reset">Send Reset Instruction</string>
+    <string name="your_email">Email Address</string>
+    <string name="status">success</string>
+    <string name="welcome">Welcome back</string>
+    <string name="password">Your Password</string>
+    <string name="sign_in">Sign In</string>
+
+    <!-- Order -->
+    <string name="placeClothes">Place Your Clothes Inside</string>
+    <string name="order_message">Let us know which locker you have \n chosen, then lock it.</string>
+    <string name="order_instructions">Are there any Special instructions (optional)?</string>
+    <string name="lockGuide">with your clother inside ,close the \ndoor, enter any 4 digit code on the\n locker keypad ,and turn the knob\n lock the door</string>
+
+    <!--welcome screen  -->
+    <string name="lockertip">Ready to drop off your clothes? \n Choose any available box and tell us \n the number in the top left corner.</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--new Order  -->
+    <string name="message">Thanks we got your order</string>
+    <string name="locerstatus">This Locker is unavailable.\nPlease choose another or \n Contact Support</string>
+
+    <!--Order confirmation  -->
+    <string name="text1"> We will let you know when your clothes\nare cleaned are ready to pick up it\nshould be within  about two days</string>
+    <string name="text2"> We just need your billing information\n and optionally your order \n preference you can do this later too</string>
+
+
+    <!-- Toast messages -->
+    <string name="toast_locker_number">Please enter locker number</string>
+    <string name="toast_name">Please enter first name</string>
+    <string name="toast_last_name">Please enter last name</string>
+    <string name="toast_email">Please enter email</string>
+    <string name="toast_phone_number">Please enter valid phone number</string>
+    <string name="toast_password">Please enter password</string>
+    <string name="exit_msg">Tap back again to exit.</string>
+
+    <!-- My account -->
+    <string name="resetpwd">This will log you out and email you reset instructions. OK?</string>
+    <string name="resetpwd_sucess">Password reset instructions sent</string>
+
+    <!-- Order preference -->
+
+    <!-- Error Message-->
+    <string name="errormsg">Something went wrong. Please try again or call us at 312-257-3888</string>
+    <string name="errortitle">Hmm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="drycleaning">Dry Clean\n &amp; Press</string>
+    <string name="launder">Launder &amp;\n Press</string>
+    <string name="wash">Wash &amp; Fold</string>
+    <string name="shoecare">Shoe Care</string>
+
+    <string name="gotosettings">Go to settings now </string>
+    <string name="start">Enter code</string>
+    <string name="end">in your settings tab.</string>
+    <string name="code">HURRY</string>
+
+    <string name="textmsg1">Save 20% on your first shoe care order.</string>
+    <string name="textmsg2">Enter code HURRY in your settings tab.</string>
+    <string name="instructions">Any special intstructions for your order(optional)?</string>
+
+    <string name="selectalert">Please select any one of the services.</string>
+    <string name="shoecarealert">Please select any one of the shoecare services.</string>
+    <string name="noserviceavailable">Not able to process an order at the moment. Please try again.</string>
+
+
+    <string name="secure_order">Secure Your Items</string>
+    <string name="empty_list_text">All orders must be placed by 8am for 2 day turnaround</string>
+    <string name="select_order">Select Order Type</string>
+    <string name="select_order_message">Please use separate bags for each order type</string>
+    <string name="order_preference">Order Preferences</string>
+    <string name="set_order_preference">Set Order Preferences</string>
+    <string name="special_instruction_heading">Special Instructions</string>
+    <string name="special_instruction_text">Enter Special Instructions here</string>
+    <string name="select_shoe_care_heading">Select Desired Shoe Care</string>
+    <string name="secure_order_description">Place your bag in an open locker, enter any 4-digit code, and turn the knob to lock.</string>
+
+
+    <string name="new_order_message">Located on the upper left corner of box</string>
+    <string name="new_order_heading">Enter Locker Number</string>
+    <string name="apply">Apply</string>
+    <string name="enter_promocode">Enter your Code here</string>
+    <string name="address">Enter your address</string>
+    <string name="user_address">address</string>
+
+    <string name="howto">HOW TO USE</string>
+    <string name="placeitems">PLACE ITEMS</string>
+    <string name="placeitems_desc">Drop your bag of clothes in an open locker,enter any  4-digit code, and then lock it.</string>
+
+
+    <string name="submitorder">SUBMIT ORDER</string>
+    <string name="submitorder_desc">Click  \"Place a New Order\" on the home page and follow the order instructions accordingly.</string>
+
+    <string name="placeorder">Place a New Order</string>
+
+    <string name="pickuptorder">PICK UP</string>
+    <string name="pickuptorder_desc">Turnaround varies by location. We\'ll notify you by text and email when your order is ready for pickup.</string>
+
+    <string name="concierge_order_heading">You are placing an order at</string>
+    <string name="concierge_order_address_incorret">Address not correct? Tap here</string>
+    <string name="concierge_order_content">Please leave your bag with the doorman or package room before 9 AM.</string>
+
+
+
+</resources>

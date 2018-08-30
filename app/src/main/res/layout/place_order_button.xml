@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="@dimen/commonMargin30"
+    android:layout_margin="@dimen/commonSpace"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/place_order_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/place_order_button_bg"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+        android:textColor="@color/white"
+        android:textSize="@dimen/place_order_button_text_size" />
+</FrameLayout>

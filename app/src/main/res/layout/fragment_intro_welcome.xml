@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_text"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/welcome"
+            android:textSize="@dimen/text_xlarge"
+            android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+            android:id="@+id/tw_welcome"
+            android:text="New Order"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textSize="@dimen/text_large"
+            android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+            android:textColor="@color/black"
+            android:text="@string/order_message"
+            android:textAlignment="center"
+            android:id="@+id/tw_locker_message" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/et_locker_number"
+            android:background="@android:color/transparent"
+            android:hint="e.g.&quot; 23 &quot;"
+            android:inputType="number"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_xxlarge"
+            android:textColorHint="@color/Silver"
+            android:focusableInTouchMode="true"/>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/btn_new_order_next"
+            android:text="Next"
+            style="@style/PressBoxButton"/>
+
+    </LinearLayout>
+</LinearLayout>

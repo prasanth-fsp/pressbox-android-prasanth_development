@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relativeMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/howto"
+            style="@style/onboard_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/howto" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/howto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/placeneworder_icon"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/placeorder_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/placeorder"
+            android:textAlignment="center"
+            android:textColor="@color/text_light"
+            android:textSize="19sp" />
+
+        <LinearLayout
+            android:id="@+id/relativeMain2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/placeorder_tv"
+            android:layout_marginTop="110dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/submitorder_tv"
+                style="@style/onboard_bottomstyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/submitorder"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/onboard_desc"
+                style="@style/onboard_description_style"
+                android:layout_marginRight="@dimen/commonSpace"
+                android:layout_marginStart="@dimen/commonSpace"
+                android:gravity="center"
+                android:text="@string/submitorder_desc"
+                android:textAlignment="inherit" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

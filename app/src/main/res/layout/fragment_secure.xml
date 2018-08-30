@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver_light"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_text"></include>
+
+
+    <TextView
+        android:id="@+id/secure_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar"
+        android:layout_marginTop="@dimen/largehight"
+        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+        android:text="@string/secure_order"
+        android:textAlignment="center"
+        android:textColor="@color/welcome"
+        android:textSize="@dimen/text_xlarge" />
+
+    <TextView
+        android:id="@+id/secure_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/secure_title"
+        android:layout_margin="@dimen/commonMargin20"
+        android:layout_marginTop="@dimen/largehight"
+        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+        android:gravity="center"
+        android:text="@string/secure_order_description"
+        android:textAlignment="inherit"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_large" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/place_order_button" />
+    </RelativeLayout>
+
+</RelativeLayout>

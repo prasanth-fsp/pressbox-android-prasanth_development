@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relativeMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/howto"
+            style="@style/onboard_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/howto" />
+
+        <ImageView
+            android:id="@+id/place_item_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/howto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/locked_onboard"
+            android:scaleType="fitCenter" />
+
+        <RelativeLayout
+            android:id="@+id/relativeMain2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/place_item_img"
+            android:layout_marginTop="70dp">
+
+            <TextView
+                android:id="@+id/placeitem_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/commonSpace"
+                android:text="@string/placeitems"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_xlarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/placeitem_desc"
+                style="@style/onboard_description_style"
+                android:layout_below="@id/placeitem_tv"
+                android:layout_marginRight="@dimen/commonSpace"
+                android:layout_marginStart="@dimen/commonSpace"
+                android:gravity="center"
+                android:text="@string/placeitems_desc"
+                android:textAlignment="inherit"
+
+                />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

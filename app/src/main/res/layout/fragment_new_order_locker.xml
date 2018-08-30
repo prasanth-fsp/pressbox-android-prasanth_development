@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_text"></include>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="@dimen/commonMargin15"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/secure_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/commonSpace"
+                android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                android:text="@string/secure_order"
+                android:textAlignment="center"
+                android:textColor="@color/welcome"
+                android:textSize="@dimen/text_xlarge"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/secure_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/commonMargin15"
+                android:layout_marginTop="@dimen/commonMargin5"
+                android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                android:gravity="center"
+                android:text="@string/secure_order_description"
+                android:textAlignment="inherit"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_large"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/concierge_layout"
+                android:layout_marginTop="@dimen/commonMargin20"
+                android:visibility="gone">
+
+                <include layout="@layout/concierge_locker_layout" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/private_locker"
+                android:layout_height="300dp"
+                android:layout_marginTop="@dimen/commonMargin5"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/commonSpace"
+                    android:layout_weight="30"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/locker_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/locker" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/commonSpace"
+                    android:layout_weight="70"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/locker_number_heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                        android:text="@string/new_order_heading"
+                        android:textAlignment="center"
+                        android:textColor="@color/pressbox"
+                        android:textSize="@dimen/text_xlarge"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/locker_number_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/commonMargin5"
+                        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                        android:text="@string/new_order_message"
+                        android:textAlignment="center"
+                        android:textColor="@color/Gray"
+                        android:textSize="@dimen/text_large" />
+
+                    <EditText
+                        android:id="@+id/locker_number_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/commonMargin15"
+                        android:layout_marginRight="@dimen/commonMargin15"
+                        android:layout_marginTop="@dimen/commonSpace"
+                        android:background="@drawable/locker_number_bg"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="fonts/ProximaNova-Regular.otf"
+                        android:hint="ex. 23"
+                        android:inputType="number"
+                        android:padding="@dimen/commonSpace"
+                        android:textAlignment="textStart"
+                        android:textColorHint="@color/Silver"
+                        android:textSize="@dimen/text_xlarge" />
+
+
+                    <Button
+                        android:id="@+id/find_location__button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/commonMargin15"
+                        android:layout_marginRight="@dimen/commonMargin15"
+                        android:layout_marginTop="@dimen/commonMargin15"
+                        android:background="@drawable/promo_code_bg"
+                        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                        android:gravity="center"
+                        android:padding="@dimen/commonMargin5"
+                        android:text="Find a locker location"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/place_order_button_text_size"
+                        android:visibility="gone" />
+
+
+                    <Button
+                        android:id="@+id/pickup_from_location__button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/commonSpace"
+                        android:layout_marginRight="@dimen/commonSpace"
+                        android:layout_marginTop="@dimen/commonMargin15"
+                        android:background="@drawable/promo_code_bg"
+                        android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                        android:gravity="center"
+                        android:padding="@dimen/commonMargin5"
+                        android:text="Doorman/Package Room Pickup"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/place_order_button_text_size"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/promo_code_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/commonMargin15"
+                android:layout_marginTop="@dimen/commonMargin15"
+                android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                android:gravity="start|center"
+                android:text="@string/promo_code"
+                android:textAlignment="textStart"
+                android:textColor="@color/pressbox"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/promocode_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/commonMargin15"
+                android:layout_marginRight="@dimen/commonMargin15"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/commonMargin5"
+                    android:layout_weight="70"
+                    android:orientation="vertical">
+
+
+                    <EditText
+                        android:id="@+id/promo_code_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/locker_number_bg"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/enter_promocode"
+                        android:inputType="text"
+                        android:padding="@dimen/commonSpace"
+                        android:textAlignment="textStart"
+                        android:textColorHint="@color/Silver"
+                        android:textSize="@dimen/text_large" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/apply_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="30"
+                    android:background="@drawable/promo_code_bg"
+                    android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+                    android:gravity="center"
+                    android:text="@string/apply"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/place_order_button_text_size" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/place_order_button" />
+    </FrameLayout>
+
+
+</RelativeLayout>

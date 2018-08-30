@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/My_account_textView"
+        android:text="Your Info" />
+
+    <RelativeLayout style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="@string/firstName"
+            android:id="@+id/textView5" />
+
+        <EditText
+            style="@style/My_account_editText"
+            android:text="Krunoslav"
+            android:id="@+id/et_account_name"
+            android:layout_toEndOf="@+id/textView5" />
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+
+    <RelativeLayout style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="@string/lastName"
+            android:id="@+id/textView4" />
+
+        <EditText
+            style="@style/My_account_editText"
+            android:text="Popovic"
+            android:id="@+id/et_account_last_name"
+            android:layout_toEndOf="@+id/textView4" />
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+
+    <RelativeLayout style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="@string/phone"
+            android:id="@+id/textView7" />
+
+        <EditText
+            style="@style/My_account_editText"
+            android:text="12345"
+            android:id="@+id/et_account_phone"
+            android:inputType="number"
+            android:layout_toEndOf="@+id/textView7" />
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+
+    <RelativeLayout style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="@string/email"
+            android:id="@+id/textView" />
+
+        <TextView
+            style="@style/My_account_editText"
+            android:text="kruno_p@hotmail.com"
+            android:id="@+id/et_account_email"
+            android:layout_toEndOf="@+id/textView" />
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+
+    <RelativeLayout style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="@string/user_address"
+            android:id="@+id/address" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/userAddress"
+                style="@style/My_account_editText"
+                android:background="@null"
+                android:hint="@string/address"
+                android:layout_toEndOf="@+id/address" />
+    </RelativeLayout>
+
+    <View style="@style/Custom_view_light"></View>
+    <RelativeLayout
+        android:visibility="gone"
+        style="@style/Custom_relative_layout">
+
+        <TextView
+            style="@style/My_account_textView_hint"
+            android:text="City"
+            android:id="@+id/textView6" />
+
+        <Spinner
+            android:id="@+id/spinner_city"
+            android:layout_toEndOf="@+id/textView6"
+            style="@style/My_account_editText"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:visibility="gone"
+        style="@style/Custom_view_light"></View>
+
+    <RelativeLayout
+        style="@style/Custom_relative_layout"
+        android:visibility="gone"
+        android:id="@+id/tw_account_change_password">
+
+        <TextView
+            style="@style/My_account_textView_light"
+            android:text="Change Password" />
+
+        <ImageView style="@style/Custom_image_view_right" />
+    </RelativeLayout>
+
+</LinearLayout>

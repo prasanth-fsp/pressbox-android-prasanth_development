@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="citys">
+        <item>Chicago</item>
+        <item>DC Metro</item>
+        <item>Nashville</item>
+        <item>Philadelphia</item>
+        <item>Dallas</item>
+        <item>Denver</item>
+    </array>
+
+    <array name="TermsHeader">
+        <item></item>
+        <item>Minimum Order Size</item>
+        <item>Non-payment</item>
+        <item>Lost Items</item>
+        <item>Loose Items</item>
+        <item>Personal Property</item>
+        <item>Barcodes</item>
+        <item>Turnaround Time</item>
+    </array>
+
+    <array name="Termsdescription">
+        <item>By placing your items in a Pressbox locker or at a Pressbox location, you agree to the following terms and conditions:</item>
+        <item>Wash &amp; Fold order minimum is 15 pounds. No minimum order size for dry cleaning.</item>
+        <item>Orders that have not been paid for within 30 days of the pickup date will be considered abandoned.
+            \nDamaged Property
+            \nPressbox follows the standards and policies set forth by the Fabricare Industry and the International Fabricare Institute. We exercise the utmost care in cleaning and processing garments entrusted to us and use such processes which, in our opinion, are best suited to the nature and conditions of each individual garment. Nevertheless, we cannot assume responsibility for inherent weaknesses or defects in materials which may result in tears or development of small holes in fabric that are not readily apparent prior to processing. We cannot guarantee against color loss, color bleeding, and shrinkage; or against damage to weak and tender fabrics; or against damage to anscelary items such as belts, buttons, beads, ties or zipper pulls. Pressbox\'s liability with respect to any damaged items shall not exceed ten (10) times our charge for cleaning that garment regardless of brand or condition.
+            \nAny damaged items must be reported and returned to Pressbox for inspection within 5 business days.</item>
+        <item>Any lost items must be reported within 5 business days. Pressbox makes its best reasonable effort to track every item that we process and will review all lost items claims on a case by case basis. Any items determined to have been lost by Pressbox will be reimbursed in accordance with the International Fabricare Fair Claims Guide and shall not exceed ten (10) times our charge for cleaning that garment regardless of brand or condition.
+            \nWhen leaving items in lockers, please ensure that your locker has been correctly closed and locked. Pressbox is not responsible for any loss or damage resulting from a failure to properly lock the locker.
+            \nFor our package delivery, shoe shine, or other services, Pressbox\'s maximum liability will be $100.</item>
+        <item>Although, we try as hard as possible track such items, we are not responsible for loose items such as jewelry, watches, cash, detachable buttons, cufflinks, belts, broaches, stings, laces, hoods or loose items on garments, etc.. We request that customers remove these items and empty pockets prior to leaving items with us as we cannot be held responsible for damage to your garments from items left in pockets (Lipstick, Gum, Pens, etc.).</item>
+        <item>Any personal property placed in a Pressbox locker that appears to have value will be removed by Pressbox and stored for 30 days. If items are unclaimed after 30 days, all property will be donated to charity.</item>
+        <item>Pressbox will adhere a permanent barcode to your garments in an inconspicuous location. These barcodes are very important in helping us track your garments so that items are not lost and to ensure you are billed consistently every time. Unfortunately we cannot accommodate requests not to adhere barcodes.</item>
+        <item>Service days and turnaround time vary by location. Pressbox will make its best reasonable effort to return clothes within 72 hours of dropoff, however, we do not guarantee turnaround times and assume no responsibility for any damages that may occur due to a delay in service.</item>
+    </array>
+
+</resources>

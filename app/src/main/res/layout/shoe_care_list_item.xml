@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/shoe_care_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+            android:padding="@dimen/commonSpace"
+            android:layout_marginTop="@dimen/commonMargin15"
+            android:layout_marginLeft="@dimen/commonMargin5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium1" />
+
+
+</LinearLayout>
