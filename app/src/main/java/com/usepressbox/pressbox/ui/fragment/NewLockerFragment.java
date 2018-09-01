@@ -90,9 +90,9 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
     TextView promo_code_heading;
     ArrayList<String> shoecarelist;
     public Context context;
-    private String lockerMatchCase ="private";
+    private String lockerMatchCase = "private";
     private Dialog dialog;
-    private String nearByAddress,lockerNumber;
+    private String nearByAddress, lockerNumber;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,8 +123,6 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
                 shoecarelist = args.getStringArrayList("shoecarelist");
         }
 
-//        new SessionManager(context).saveLockerNumber(null);
-//        new SessionManager(context).saveLockerNumber(locker_number_edittext.getText().toString());
         lockerNumber = locker_number_edittext.getText().toString();
 
         return v;
@@ -144,7 +142,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
 //        params.put("geolocation", "41.8829607, -87.63414829999999");
             params.put("sessionToken", new SessionManager(context).getSessionToken());
             params.put("signature", Signature.getUrlConversion(params));
-            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params,"getOrderType");
+            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, "getOrderType");
             confirmOrderTypeTask.ResponseTask();
         } else {
             UtilityClass.showAlertWithRedirect(context, "null", "Please enter your address", "myaccount");
@@ -155,29 +153,9 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
     @OnClick(R.id.toolbar_left)
     void cancel() {
 
-//        if (shoecarelist != null) {
-//            Fragment fragment = new ShoeOrderType();
-//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            Fragment currentFragment = getFragmentManager().findFragmentById(R.id.fragment);
-//
-//            if (!currentFragment.getClass().equals(fragment.getClass())) {
-//                transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
-//            }            transaction.replace(R.id.fragment, fragment);
-//            transaction.commit();
-//        } else {
-//            Fragment fragment = new SelectServices();
-//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            Fragment currentFragment = getFragmentManager().findFragmentById(R.id.fragment);
-//
-//            if (!currentFragment.getClass().equals(fragment.getClass())) {
-//                transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
-//            }            transaction.replace(R.id.fragment, fragment);
-//            transaction.commit();
-
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack();
-                }
-//        }
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }
     }
 
 
@@ -219,11 +197,9 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
         params.put("sessionToken", new SessionManager(context).getSessionToken());
         params.put("business_id", Constants.BUSINESS_ID);
         params.put("signature", Signature.getUrlConversion(params));
-        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getNearByLocation(), this, params,"getNearByLocation");
+        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getNearByLocation(), this, params, "getNearByLocation");
         confirmOrderTypeTask.ResponseTask();
     }
-
-
 
 
     public void setToolbarTitle() {
@@ -252,19 +228,22 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
                 if (!locationModel.getLocationType().equalsIgnoreCase("null")) {
                     if (locationModel.getLocationType().equalsIgnoreCase("Lockers")) {
                         showLockerView();
-
+                        hideConciergeView();
                         lockerMatchCase = "Approved Private Locker";
                         find_location__button.setVisibility(View.GONE);
-
+                        lockerNumber = null;
                     } else if (locationModel.getLocationType().equalsIgnoreCase("Concierge")
                             || locationModel.getLocationType().equalsIgnoreCase("Offices")) {
                         lockerMatchCase = "Approved doorman";
-                        pickup_from_location__button.setVisibility(View.VISIBLE);
+                        lockerNumber = null;
+
+                        hideLockerView();
+
+                        concierge_layout.setVisibility(View.VISIBLE);
 
                         String locationId = locationModel.getLocation_id();
                         String address = locationModel.getAddress();
 
-                        concierge_layout.setVisibility(View.VISIBLE);
                         /*UpdateTextViewStyle*/
                         updateTextViewStyle();
 
@@ -280,19 +259,27 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
                     } else if (locationModel.getLocationType().equalsIgnoreCase("Kiosk")) {
                         lockerMatchCase = "Public locker location";
                         find_location__button.setVisibility(View.VISIBLE);
+                        hideConciergeView();
                         showLockerView();
+                        lockerNumber = null;
+
                     } else {
                         lockerMatchCase = "Public locker location";
                         find_location__button.setVisibility(View.VISIBLE);
+                        hideConciergeView();
                         showLockerView();
+                        lockerNumber = null;
+
                     }
                 } else {
+                    hideConciergeView();
                     lockerMatchCase = "Public locker location";
                     showLockerView();
                     find_location__button.setVisibility(View.VISIBLE);
                 }
                 break;
             case "false":
+                hideConciergeView();
                 showLockerView();
                 find_location__button.setVisibility(View.VISIBLE);
                 lockerMatchCase = "Public locker location";
@@ -329,9 +316,17 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
 
     private void showLockerView() {
         private_locker.setVisibility(View.VISIBLE);
-        pickup_from_location__button.setVisibility(View.GONE);
         showPromoCodeView();
     }
+
+    private void hideLockerView() {
+        private_locker.setVisibility(View.GONE);
+    }
+
+    private void hideConciergeView() {
+        concierge_layout.setVisibility(View.GONE);
+    }
+
 
     private void showPromoCodeView() {
         promo_code_heading.setVisibility(View.VISIBLE);
@@ -346,7 +341,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
         params.put("sessionToken", new SessionManager(context).getSessionToken());
 //        params.put("business_id", Constants.BUSINESS_ID);
         params.put("signature", Signature.getUrlConversion(params));
-        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getLockerType(), this,params, "getLockerNumber");
+        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getLockerType(), this, params, "getLockerNumber");
         confirmOrderTypeTask.ResponseTask();
     }
 
@@ -380,26 +375,24 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
 
         if (locationModel.getAddress() != null) {
 
-            if (lockerMatchCase.equalsIgnoreCase("Public locker location")) {
-                nearByAddress = locationModel.getAddress();
-                UtilityClass.getLocationFromAddress(nearByAddress, getContext());
+//            if (lockerMatchCase.equalsIgnoreCase("Public locker location")) {
+            nearByAddress = locationModel.getAddress();
+            UtilityClass.getLocationFromAddress(nearByAddress, getContext());
 
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("token", Constants.TOKEN);
-                params.put("address", nearByAddress);
-                params.put("geolocation", new SessionManager(context).getUserGeoLocation());
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("token", Constants.TOKEN);
+            params.put("address", nearByAddress);
+            params.put("geolocation", new SessionManager(context).getUserGeoLocation());
 //        params.put("address","30 Park Avenue");
 //        params.put("geolocation", "41.8829607, -87.63414829999999");
-                params.put("sessionToken", new SessionManager(context).getSessionToken());
-                params.put("signature", Signature.getUrlConversion(params));
-                ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, nearByAddress,"getOrderType");
-                confirmOrderTypeTask.ResponseTask();
-            } else {
-                UtilityClass.showAlertWithOk(getActivity(), "Alert!", "Please try again", "place-order");
-            }
+            params.put("sessionToken", new SessionManager(context).getSessionToken());
+            params.put("signature", Signature.getUrlConversion(params));
+            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, nearByAddress, "getOrderType");
+            confirmOrderTypeTask.ResponseTask();
+//            }
+        } else {
+            UtilityClass.showAlertWithOk(getActivity(), "Alert!", "Please try again", "place-order");
         }
-
-
 
 
     }
@@ -407,12 +400,15 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
     @Override
     public void updateLockerNumber(String value) {
         if (value != null) {
-            new SessionManager(context).saveLockerNumber(value);
-            lockerNumber = value;
+            if (lockerMatchCase.equalsIgnoreCase("Approved doorman")) {
 
-            if (private_locker.getVisibility() == View.VISIBLE)
-                locker_number_edittext.setText(value);
+                new SessionManager(context).saveLockerNumber(value);
+                lockerNumber = value;
 
+                if (private_locker.getVisibility() == View.VISIBLE)
+                    locker_number_edittext.setText(value);
+
+            }
         }
 
     }
@@ -433,54 +429,37 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderType {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, (int) (UtilityClass.getScreenHeight(getActivity()) * .6));
 
     }
+
     @OnClick(R.id.place_order_button)
     void submit() {
 
-        if(lockerMatchCase.equalsIgnoreCase("Approved Private Locker")){
-                    if (locker_number_edittext.getText().toString().length() > 0) {
-                        new SessionManager(context).saveLockerNumber(locker_number_edittext.getText().toString());
+        if (lockerMatchCase.equalsIgnoreCase("Approved Private Locker")) {
+            if (locker_number_edittext.getText().toString().length() > 0) {
+                new SessionManager(context).saveLockerNumber(locker_number_edittext.getText().toString());
                         claimsCreateTask();
 
-                    }
-                    else {
-                        UtilityClass.showAlertWithOk(getActivity(), "Alert!", getResources().getString(R.string.toast_locker_number), "place-order");
-                    }
+            } else {
+                UtilityClass.showAlertWithOk(getActivity(), "Alert!", getResources().getString(R.string.toast_locker_number), "place-order");
+            }
 
-        }else if(lockerMatchCase.equalsIgnoreCase("Approved doorman")){
+        } else if (lockerMatchCase.equalsIgnoreCase("Approved doorman")) {
 
-            if(lockerNumber != null || !lockerNumber.equalsIgnoreCase("")) {
+            if (lockerNumber != null || !lockerNumber.equalsIgnoreCase("")) {
                 new SessionManager(context).saveLockerNumber(lockerNumber);
                 claimsCreateTask();
-            }
-            else {
+            } else {
                 UtilityClass.showAlertWithOk(getActivity(), "Alert!", "Please try again", "place-order");
             }
 
-        }else{
+        } else {
             if (locker_number_edittext.getText().toString().length() > 0) {
                 new SessionManager(context).saveLockerNumber(locker_number_edittext.getText().toString());
                 claimsCreateTask();
-            }
-            else {
+            } else {
                 UtilityClass.showAlertWithOk(getActivity(), "Alert!", getResources().getString(R.string.toast_locker_number), "place-order");
             }
         }
-        
-    /*    if (new SessionManager(context).getLockerNumber() != null
-                || !new SessionManager(context).getLockerNumber().isEmpty()
-                || !new SessionManager(context).getLockerNumber().equalsIgnoreCase("null")
-                || !new SessionManager(context).getLockerNumber().equalsIgnoreCase("")) {
-                    
 
-   
-        } else {
-            if(lockerMatchCase.equalsIgnoreCase("Approved doorman")){
-                UtilityClass.showAlertWithOk(getActivity(), "Alert!", "Please try again", "place-order");
-
-            }else {
-                UtilityClass.showAlertWithOk(getActivity(), "Alert!", getResources().getString(R.string.toast_locker_number), "place-order");
-            }
-        }*/
     }
 
     private void claimsCreateTask() {

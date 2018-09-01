@@ -98,8 +98,8 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
 
 
     Boolean state = false;
-    ArrayList<String> selectlist = new ArrayList<String>();
-    ArrayList<String> selectids = new ArrayList<String>();
+    ArrayList<String> selectlist;
+    ArrayList<String> selectids;
 
 
     SelectservicesAdapter adapter;
@@ -122,6 +122,9 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
         place_order_button.setText("Next");
         special_instruction_edittext.clearFocus();
         special_instruction_edittext.setActivated(false);
+
+        selectlist = new ArrayList<String>();
+        selectids = new ArrayList<String>();
 
         setToolbarTitle();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -160,15 +163,15 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
 
     }
 
-/*
-    Created By Prasanth.S on 13.08.2018
-*/
+    /*
+        Created By Prasanth.S on 13.08.2018
+    */
     private void setIcons(ImageView imageView, String orderType, String select) {
         switch (orderType) {
             case "Wash and Fold":
                 if (select.equalsIgnoreCase("true")) {
                     imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.wash_fold_active));
-                }else {
+                } else {
                     imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.wash_fold_non_active));
                 }
             case "Wash & Fold":
@@ -309,7 +312,7 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
 //                UtilityClass.showAlert(getActivity(),"Please write an order notes");
 //                }
         } else {
-            UtilityClass.showAlertWithOk(getActivity(), "Alert!",getResources().getString(R.string.selectalert),"selectservice");
+            UtilityClass.showAlertWithOk(getActivity(), "Alert!", getResources().getString(R.string.selectalert), "selectservice");
         }
 
     }
@@ -370,7 +373,6 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
     }
 
 
-
     @OnClick(R.id.set_order_preference_layout)
     void orderPreference() {
         preference_img.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.select));
@@ -381,14 +383,13 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
     }
 
 
-    @OnTouch({R.id.select_service_parent, R.id.tool_bar, R.id.rvNumbers, R.id.parent_scroll,R.id.special_instruction_heading_layout})
+    @OnTouch({R.id.select_service_parent, R.id.tool_bar, R.id.rvNumbers, R.id.parent_scroll, R.id.special_instruction_heading_layout})
     boolean touch(View v, MotionEvent motionEvent) {
         UtilityClass.hideKeyboard(getActivity());
         special_instruction_edittext.clearFocus();
         special_instruction_edittext.setCursorVisible(false);
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.special_instruction_heading_layout:
                 special_instruction_edittext.setCursorVisible(true);
                 special_instruction_edittext.setFocusableInTouchMode(true);
