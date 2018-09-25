@@ -1,5 +1,7 @@
 package com.usepressbox.pressbox.support;
 
+import android.content.Context;
+
 import com.usepressbox.pressbox.models.OrderPreference;
 import com.usepressbox.pressbox.utils.SessionManager;
 
@@ -13,9 +15,11 @@ import org.json.JSONObject;
 public class CustomerDetails {
 
     private JSONObject jsonObject;
+    private Context context;
 
-    public CustomerDetails(JSONObject jsonObject) {
+    public CustomerDetails(JSONObject jsonObject, Context context) {
         this.jsonObject = jsonObject;
+        this.context=context;
 
         getCustomerObject();
         setOrderPreferences();
@@ -23,21 +27,38 @@ public class CustomerDetails {
     }
 
     public void getCustomerObject(){
-
+        SessionManager sessionManager=new SessionManager(context);
         JSONObject customerObject = null;
         try {
             customerObject = jsonObject.getJSONObject("data").getJSONObject("customerDetails");
             SessionManager.CUSTOMER.setName(customerObject.getString("firstName"));
             SessionManager.CUSTOMER.setLastName(customerObject.getString("lastName"));
             SessionManager.CUSTOMER.setEmail(customerObject.getString("email"));
-            SessionManager.CUSTOMER.setCity(customerObject.getString("city"));
             SessionManager.CUSTOMER.setPhone(customerObject.getString("phone"));
+            SessionManager.CUSTOMER.setCity(customerObject.getString("city"));
+            SessionManager.CUSTOMER.setState(customerObject.getString("state"));
+            SessionManager.CUSTOMER.setZipcode(customerObject.getString("zip"));
+            if(!customerObject.getString("address2").trim().isEmpty() ||  customerObject.getString("address2") != null){
+                SessionManager.CUSTOMER.setStreetLongAddress(customerObject.getString("address2"));
+                sessionManager.saveUserAddress("");
+                sessionManager.saveUserAddress(customerObject.getString("address2")+","+
+                        customerObject.getString("city")+","+customerObject.getString("state")+","+customerObject.getString("zip") );
+            }
+
+            if (!customerObject.getString("address1").trim().isEmpty() ||  customerObject.getString("address1") != null){
+                SessionManager.CUSTOMER.setStreetAddress(customerObject.getString("address1"));
+                sessionManager.saveUserShortAddress("");
+                sessionManager.saveUserShortAddress(customerObject.getString("address1")+","+
+                        customerObject.getString("city")+","+customerObject.getString("state")+","+customerObject.getString("zip") );
+            }
+
             SessionManager.CUSTOMER.setStarchOnShirtsId(customerObject.getString("starchOnShirts_id"));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
     public void setOrderPreferences(){
 

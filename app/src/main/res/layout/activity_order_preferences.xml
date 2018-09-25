@@ -107,7 +107,7 @@
 
             <TextView
                 style="@style/Custom_textView_blue"
-                android:text="Detergent" />
+                android:text="Wash and Fold Detergent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,45 +115,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tw_order_preferences_gain"
+                    android:id="@+id/tw_order_preferences_scented_tide"
                     style="@style/Custom_textView_detergent"
-                    android:background="@drawable/shape"
-                    android:text="Gain"
-                    android:visibility="gone" />
+                    android:background="@drawable/shape_order_preference"
+                    android:text="Tide" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="90">
-
-                    <TextView
-                        android:id="@+id/tw_order_preferences_tide"
-                        style="@style/Custom_textView_detergent"
-                        android:layout_weight="30"
-                        android:background="@drawable/shape"
-                        android:text="Tide" />
-
-                    <TextView
-                        android:id="@+id/tw_order_preferences_unscented_tide"
-                        style="@style/Custom_textView_detergent"
-                        android:layout_weight="30"
-                        android:background="@drawable/shape"
-                        android:text="Unscented tide" />
-
-                    <TextView
-                        android:id="@+id/tw_order_preferences_scented_tide"
-                        style="@style/Custom_textView_detergent"
-                        android:layout_weight="30"
-                        android:background="@drawable/shape"
-                        android:text="Scented tide" />
-                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tw_order_preferences_charlies"
+                    android:id="@+id/tw_order_preferences_unscented_tide"
                     style="@style/Custom_textView_detergent"
-                    android:background="@drawable/shape"
-                    android:text="Charlies"
-                    android:visibility="gone" />
+                    android:background="@drawable/shape_order_preference"
+                    android:text="Tide Free &amp; Gentle" />
 
 
             </LinearLayout>

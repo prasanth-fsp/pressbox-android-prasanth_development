@@ -13,7 +13,9 @@ public class Constants {
     public static boolean firstTime = false;
     public static String FROM="";
     public static String PRIVACY_POLICY="https://www.pg.com/privacy/english/privacy_statement.shtml";
-    public static String TANDC="https://www.usepressbox.com";
+    public static String TANDC="https://www.pressboxbytide.com/terms";
+    public static String SUPPORT="https://usepressbox.zendesk.com/hc/en-us";
+
 
     public static boolean register = false;
     public static String shoecare = "Shoe Care";

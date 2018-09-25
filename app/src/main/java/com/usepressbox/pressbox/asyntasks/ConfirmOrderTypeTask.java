@@ -1,31 +1,22 @@
 package com.usepressbox.pressbox.asyntasks;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.text.Html;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.usepressbox.pressbox.R;
-import com.usepressbox.pressbox.interfaces.IConfirmOrderType;
+import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
 import com.usepressbox.pressbox.models.ApiCallParams;
-import com.usepressbox.pressbox.models.LocationModel;
 import com.usepressbox.pressbox.support.CustomProgressDialog;
 import com.usepressbox.pressbox.support.ServerResponse;
 import com.usepressbox.pressbox.support.VolleyResponseListener;
-import com.usepressbox.pressbox.ui.fragment.NewLockerFragment;
 import com.usepressbox.pressbox.utils.AbstractClass;
-import com.usepressbox.pressbox.utils.SessionManager;
 import com.usepressbox.pressbox.utils.UtilityClass;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by Prasanth.S on 8/20/2018.
@@ -38,11 +29,11 @@ public class ConfirmOrderTypeTask extends AbstractClass {
     private String redirect,nearBylocation;
     private ProgressBar progBar;
     private TextView lblMessage;
-    private IConfirmOrderType iConfirmOrderType;
+    private IConfirmOrderTypeListener iConfirmOrderType;
     private HashMap<String, String> params;
     private CustomProgressDialog progress;
 
-    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderType iConfirmOrderType,   HashMap<String, String> params,String tag) {
+    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String tag) {
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.iConfirmOrderType = iConfirmOrderType;
@@ -50,7 +41,7 @@ public class ConfirmOrderTypeTask extends AbstractClass {
         this.params=params;
     }
 
-    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderType iConfirmOrderType,   HashMap<String, String> params,String nearBylocation,String tag) {
+    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String nearBylocation, String tag) {
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.iConfirmOrderType = iConfirmOrderType;
@@ -80,8 +71,6 @@ public class ConfirmOrderTypeTask extends AbstractClass {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status");
                     if (status.equalsIgnoreCase("success")) {
-//                        String type=jsonObject.getString("type");
-
                         switch (redirect) {
                             case "getLockerNumber":
                                 saveLocationData(context, jsonObject, redirect, iConfirmOrderType,nearBylocation);

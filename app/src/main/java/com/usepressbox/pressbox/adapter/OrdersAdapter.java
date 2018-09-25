@@ -32,6 +32,11 @@ public class OrdersAdapter extends BaseAdapter {
         inflater=(LayoutInflater) this.c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setData(ArrayList<GetOrdersModel> data){
+        if(data!= null){
+            dataArray = data;
+        }
+    }
 
     @Override
     public int getCount() {
@@ -67,17 +72,21 @@ public class OrdersAdapter extends BaseAdapter {
         else {
             cell=(ListCell)convertView.getTag();
         }
+        GetOrdersModel order = dataArray.get(position);
 
         //change the data of cell here
-
         LinearLayout linearLayout = (LinearLayout)convertView.findViewById(R.id.linear_layout_locker_id);
         if (selectedPosition == position){
-            linearLayout.setVisibility(convertView.VISIBLE);
+            if(order.getStatus().equalsIgnoreCase("Ready for Customer Pickup")
+                    || order.getStatus().equalsIgnoreCase("Completed")){
+                linearLayout.setVisibility(convertView.VISIBLE);
+            }else {
+                linearLayout.setVisibility(convertView.GONE);
+            }
         }else{
             linearLayout.setVisibility(convertView.GONE);
         }
 
-        GetOrdersModel order = dataArray.get(position);
 
         String date = order.getDate();
         cell.tw_order_row_month.setText(UtilityClass.convertDate(date.split("-")[1]));
@@ -86,8 +95,12 @@ public class OrdersAdapter extends BaseAdapter {
         cell.tw_order_row_address.setText(order.getAddress());
         cell.tw_order_row_lockerID.setText(order.getLockerId());
 
-        String unlock_code = SessionManager.CUSTOMER.getPhone().substring(SessionManager.CUSTOMER.getPhone().length() - 4);
-        cell.tw_unlock_code.setText(unlock_code);
+        try {
+            String unlock_code = SessionManager.CUSTOMER.getPhone().substring(SessionManager.CUSTOMER.getPhone().length() - 4);
+            cell.tw_unlock_code.setText(unlock_code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         cell.tw_order_row_info.setText(order.getStatus());
 

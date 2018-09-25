@@ -36,20 +36,23 @@
         android:textColor="@color/black"
         android:textSize="@dimen/text_large" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_centerInParent="true"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="130dp"
-            android:layout_height="150dp"
-            android:layout_centerInParent="true"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:minHeight="180dp"
+            android:maxHeight="180dp"
             android:src="@drawable/locker" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <View style="@style/viewstyle"></View>
 
@@ -57,17 +60,23 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/commonSpace"
+        android:id="@+id/finish_lay"
+        android:background="@drawable/shape_blue">
 
         <TextView
             android:id="@+id/tw_finish_up"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="Finish up"
+            android:background="@null"
+            android:textAlignment="center"
+            android:fontFamily="fonts/ProximaNova-Bold.otf"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/welcome"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_large" />
     </LinearLayout>
 

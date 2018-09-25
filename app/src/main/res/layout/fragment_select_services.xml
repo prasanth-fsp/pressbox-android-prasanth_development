@@ -164,7 +164,8 @@
                 android:text="@string/set_order_preference"
                 android:textAlignment="inherit"
                 android:textColor="@color/pressbox"
-                android:textSize="@dimen/text_large" />
+                android:textSize="@dimen/text_large"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/set_order_preference_layout"
@@ -174,12 +175,12 @@
                 android:layout_marginRight="30dp"
                 android:background="@drawable/order_placement_button_bg"
                 android:orientation="horizontal"
-                android:weightSum="100">
+                android:weightSum="100"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="0dp"
                     android:id="@+id/preference_img"
-                    app:srcCompat="@drawable/ic_preference"
                     android:layout_height="50dp"
                     android:layout_weight="15"
                     android:padding="@dimen/commonSpace" />

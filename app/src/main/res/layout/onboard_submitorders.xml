@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/howto"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="80dp"
             android:background="@drawable/placeneworder_icon"
             android:scaleType="fitCenter" />
 
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="@string/placeorder"
             android:textAlignment="center"
-            android:textColor="@color/text_light"
+            android:textColor="@color/Gray"
             android:textSize="19sp" />
 
         <LinearLayout
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/placeorder_tv"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="80dp"
             android:orientation="vertical">
 
             <TextView
@@ -62,7 +62,7 @@
                 android:id="@+id/onboard_desc"
                 style="@style/onboard_description_style"
                 android:layout_marginRight="@dimen/commonSpace"
-                android:layout_marginStart="@dimen/commonSpace"
+                android:layout_marginLeft="@dimen/commonSpace"
                 android:gravity="center"
                 android:text="@string/submitorder_desc"
                 android:textAlignment="inherit" />

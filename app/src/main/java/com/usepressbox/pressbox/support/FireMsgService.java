@@ -84,7 +84,7 @@ public class FireMsgService extends FirebaseMessagingService {
             notificationBuilder.setColor(getResources().getColor(R.color.pressbox));
 
         } else {
-            notificationBuilder.setSmallIcon(R.drawable.notification_icon);
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification_icon);
 
         }
 

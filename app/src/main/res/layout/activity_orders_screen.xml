@@ -22,7 +22,7 @@
 
             <include
                 android:id="@+id/tool_bar"
-                layout="@layout/toolbar_select"
+                layout="@layout/toolbar_orders"
            ></include>
 
             <android.support.design.widget.FloatingActionButton

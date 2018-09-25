@@ -31,6 +31,9 @@
 
         <ImageView style="@style/Custom_image_view_right" />
     </RelativeLayout>
+
+    <View
+        style="@style/Custom_view_light"></View>
     <RelativeLayout
         android:id="@+id/pricetable"
         style="@style/Custom_relative_layout">
@@ -41,6 +44,9 @@
 
         <ImageView style="@style/Custom_image_view_right" />
     </RelativeLayout>
+
+    <View
+        style="@style/Custom_view_light"></View>
     <RelativeLayout
         android:id="@+id/locations"
         style="@style/Custom_relative_layout">
@@ -51,6 +57,10 @@
 
         <ImageView style="@style/Custom_image_view_right" />
     </RelativeLayout>
+
+
+    <View
+        style="@style/Custom_view_light"></View>
     <RelativeLayout
         android:id="@+id/terms_and_conditions"
         style="@style/Custom_relative_layout">

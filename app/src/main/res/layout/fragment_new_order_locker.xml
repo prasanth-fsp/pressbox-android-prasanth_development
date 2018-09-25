@@ -127,11 +127,13 @@
                         android:focusableInTouchMode="true"
                         android:fontFamily="fonts/ProximaNova-Regular.otf"
                         android:hint="ex. 23"
-                        android:inputType="number"
+                        android:inputType="phone"
                         android:padding="@dimen/commonSpace"
                         android:textAlignment="textStart"
                         android:textColorHint="@color/Silver"
-                        android:textSize="@dimen/text_xlarge" />
+                        android:textSize="@dimen/text_xlarge"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"/>
 
 
                     <Button
@@ -141,11 +143,10 @@
                         android:layout_marginLeft="@dimen/commonMargin15"
                         android:layout_marginRight="@dimen/commonMargin15"
                         android:layout_marginTop="@dimen/commonMargin15"
-                        android:background="@drawable/promo_code_bg"
+                        android:background="@null"
                         android:fontFamily="fonts/ProximaNova-SemiBold.otf"
                         android:gravity="center"
                         android:padding="@dimen/commonMargin5"
-                        android:text="Find a locker location"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/place_order_button_text_size"
@@ -216,8 +217,10 @@
                         android:hint="@string/enter_promocode"
                         android:inputType="text"
                         android:padding="@dimen/commonSpace"
+                        android:fontFamily="fonts/ProximaNova-Regular.otf"
                         android:textAlignment="textStart"
                         android:textColorHint="@color/Silver"
+                        android:imeOptions="actionDone"
                         android:textSize="@dimen/text_large" />
 
                 </LinearLayout>

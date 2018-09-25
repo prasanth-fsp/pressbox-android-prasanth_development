@@ -43,7 +43,6 @@ public class ServiceTypeDetails {
                 selectoptions.add(keyvalue);
                 options.put(key, keyvalue);
 
-
             }
             select_params.add(options);
 

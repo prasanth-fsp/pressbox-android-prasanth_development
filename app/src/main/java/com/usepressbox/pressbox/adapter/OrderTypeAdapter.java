@@ -65,11 +65,7 @@ public class OrderTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final ItemViewHolder holder = (ItemViewHolder) viewholder;
 
 
-            GlideApp.with(context)
-                    .load(mCategoryList.get(position).getOrderTypeImg())
-                    .placeholder(R.drawable.notification_icon)
-                    .error(R.drawable.notification_icon)
-                    .into(holder.order_image);
+
 
             holder.order_title.setText(mCategoryList.get(position).getOrderTypeName());
 

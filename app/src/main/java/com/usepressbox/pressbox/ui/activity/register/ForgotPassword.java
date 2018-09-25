@@ -58,11 +58,11 @@ public class ForgotPassword extends AppCompatActivity {
     @OnClick(R.id.btn_reset_password)
     void resetUsername() {
 
-        if (username.getText().toString().length() > 0) {
+        if (username.getText().toString().trim().length() > 0) {
 
             if (SessionManager.CUSTOMER == null)
                 SessionManager.CUSTOMER = new Customer();
-                SessionManager.CUSTOMER.setEmail(username.getText().toString());
+                SessionManager.CUSTOMER.setEmail(username.getText().toString().trim());
 
             if (new ValidateCheckingClass().emailValidate(username.getText().toString())) {
 
@@ -70,7 +70,7 @@ public class ForgotPassword extends AppCompatActivity {
 
                     new BackgroundTask(ForgotPassword.this, SessionManager.CUSTOMER.sendForgotPasswordEmail());
                 } else {
-                    Toast.makeText(ForgotPassword.this, "Please check you network connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPassword.this, "Please check your network connection", Toast.LENGTH_SHORT).show();
                 }
 
 

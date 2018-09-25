@@ -6,8 +6,8 @@
     <string name="clearExp">A Cleaner Experience</string>
 
     <!-- detergent code -->
-    <string name="gain">3616</string>
-    <string name="tide">3117</string>
+    <string name="scented_tide">3616</string>
+    <string name="unscented_tide">3117</string>
     <string name="charlies">3110</string>
 
     <!-- bleach -->
@@ -65,7 +65,7 @@
     <string name="placeClothes">Place Your Clothes Inside</string>
     <string name="order_message">Let us know which locker you have \n chosen, then lock it.</string>
     <string name="order_instructions">Are there any Special instructions (optional)?</string>
-    <string name="lockGuide">with your clother inside ,close the \ndoor, enter any 4 digit code on the\n locker keypad ,and turn the knob\n lock the door</string>
+    <string name="lockGuide">With your clothes inside, close and lock the door</string>
 
     <!--welcome screen  -->
     <string name="lockertip">Ready to drop off your clothes? \n Choose any available box and tell us \n the number in the top left corner.</string>
@@ -77,8 +77,9 @@
     <string name="locerstatus">This Locker is unavailable.\nPlease choose another or \n Contact Support</string>
 
     <!--Order confirmation  -->
-    <string name="text1"> We will let you know when your clothes\nare cleaned are ready to pick up it\nshould be within  about two days</string>
-    <string name="text2"> We just need your billing information\n and optionally your order \n preference you can do this later too</string>
+    <string name="text1"> Turnaround is 2 days as long as you dropped off by 9 AM.\n\n We just need your billing information, and optionally your order preferences. You can complete this later too.</string>
+    <string name="text2"> We just need your billing information\n and optionally your order \n preferences. you can do this later too.</string>
+    <!--<string name="text2">Credit Card Added. You can change your billing preferences at anytime in your account section. We'll email you a receipt for each order.</string>-->
 
 
     <!-- Toast messages -->
@@ -123,7 +124,7 @@
 
 
     <string name="secure_order">Secure Your Items</string>
-    <string name="empty_list_text">All orders must be placed by 8am for 2 day turnaround</string>
+    <string name="empty_list_text">All orders must be placed by 8am for 2 business day turnaround</string>
     <string name="select_order">Select Order Type</string>
     <string name="select_order_message">Please use separate bags for each order type</string>
     <string name="order_preference">Order Preferences</string>
@@ -137,13 +138,13 @@
     <string name="new_order_message">Located on the upper left corner of box</string>
     <string name="new_order_heading">Enter Locker Number</string>
     <string name="apply">Apply</string>
-    <string name="enter_promocode">Enter your Code here</string>
+    <string name="enter_promocode">Please enter a promo code</string>
     <string name="address">Enter your address</string>
     <string name="user_address">address</string>
 
     <string name="howto">HOW TO USE</string>
     <string name="placeitems">PLACE ITEMS</string>
-    <string name="placeitems_desc">Drop your bag of clothes in an open locker,enter any  4-digit code, and then lock it.</string>
+    <string name="placeitems_desc">Drop your bag of clothes in an open locker, enter any  4-digit code, and then lock it.</string>
 
 
     <string name="submitorder">SUBMIT ORDER</string>
@@ -156,6 +157,7 @@
 
     <string name="concierge_order_heading">You are placing an order at</string>
     <string name="concierge_order_address_incorret">Address not correct? Tap here</string>
+    <string name="find_locker_location">Find a locker location</string>
     <string name="concierge_order_content">Please leave your bag with the doorman or package room before 9 AM.</string>
 
 

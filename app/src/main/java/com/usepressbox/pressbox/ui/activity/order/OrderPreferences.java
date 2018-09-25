@@ -3,6 +3,7 @@ package com.usepressbox.pressbox.ui.activity.order;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +14,9 @@ import android.widget.TextView;
 
 import com.usepressbox.pressbox.R;
 import com.usepressbox.pressbox.asyntasks.BackgroundTask;
-import com.usepressbox.pressbox.models.Order;
 import com.usepressbox.pressbox.models.OrderPreference;
 import com.usepressbox.pressbox.ui.MyAcccount;
+import com.usepressbox.pressbox.ui.activity.register.Intro;
 import com.usepressbox.pressbox.utils.Constants;
 import com.usepressbox.pressbox.utils.SessionManager;
 
@@ -45,12 +46,10 @@ public class OrderPreferences extends AppCompatActivity {
     android.support.v7.widget.SwitchCompat switch_dryer;
     @BindView(R.id.switch_fabric_softner)
     android.support.v7.widget.SwitchCompat switch_fabric_softner;
-    @BindView(R.id.tw_order_preferences_gain)
-    TextView gain;
-    @BindView(R.id.tw_order_preferences_tide)
-    TextView tide;
-    @BindView(R.id.tw_order_preferences_charlies)
-    TextView charlies;
+    @BindView(R.id.tw_order_preferences_scented_tide)
+    TextView scented_tide;
+    @BindView(R.id.tw_order_preferences_unscented_tide)
+    TextView unscented_tide;
     @BindView(R.id.btn_save_order)
     TextView save;
     private String From;
@@ -65,7 +64,6 @@ public class OrderPreferences extends AppCompatActivity {
         setSeekerGravity();
         if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("From")) {
             From = getIntent().getExtras().getString("From");
-
         }
 
 
@@ -81,10 +79,17 @@ public class OrderPreferences extends AppCompatActivity {
                             orderPreferences.putExtra("From", "SelectService");
                             startActivity(orderPreferences);
                             finish();
+                        } else if (From.equalsIgnoreCase("IntroFinishFragment")) {
+                            Intent toIntro = new Intent(OrderPreferences.this, Intro.class);
+                            toIntro.putExtra("From", "IntroFinishFragment");
+                            startActivity(toIntro);
+                            finish();
                         } else {
                             Intent toLocker = new Intent(OrderPreferences.this, MyAcccount.class);
                             startActivity(toLocker);
                             finish();
+
+
                         }
                     } else {
                         Intent toLocker = new Intent(OrderPreferences.this, MyAcccount.class);
@@ -98,23 +103,18 @@ public class OrderPreferences extends AppCompatActivity {
         setPreferences();
     }
 
-    @OnClick(R.id.tw_order_preferences_gain)
+    @OnClick(R.id.tw_order_preferences_scented_tide)
     void setGain() {
 
-        setDetergent(getResources().getString(R.string.gain));
+        setDetergent(getResources().getString(R.string.scented_tide));
     }
 
-    @OnClick(R.id.tw_order_preferences_tide)
+    @OnClick(R.id.tw_order_preferences_unscented_tide)
     void setTide() {
 
-        setDetergent(getResources().getString(R.string.tide));
+        setDetergent(getResources().getString(R.string.unscented_tide));
     }
 
-    @OnClick(R.id.tw_order_preferences_charlies)
-    void setCharlies() {
-
-        setDetergent(getResources().getString(R.string.charlies));
-    }
 
     public void setToolbarTitle() {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -186,21 +186,14 @@ public class OrderPreferences extends AppCompatActivity {
 
     public void setDetergent(String s) {
 
-        if (s.equals(getResources().getString(R.string.gain))) {
-            setDetergentOn(gain);
-            setDetergentOff(tide);
-            setDetergentOff(charlies);
+        if (s.equals(getResources().getString(R.string.scented_tide))) {
+            setDetergentOn(scented_tide);
+            setDetergentOff(unscented_tide);
             SessionManager.ORDER_PREFERENCE.setDetergentID("3616");
-        } else if (s.equals(getResources().getString(R.string.tide))) {
-            setDetergentOn(tide);
-            setDetergentOff(gain);
-            setDetergentOff(charlies);
+        } else if (s.equals(getResources().getString(R.string.unscented_tide))) {
+            setDetergentOn(unscented_tide);
+            setDetergentOff(scented_tide);
             SessionManager.ORDER_PREFERENCE.setDetergentID("3117");
-        } else if (s.equals(getResources().getString(R.string.charlies))) {
-            setDetergentOn(charlies);
-            setDetergentOff(tide);
-            setDetergentOff(gain);
-            SessionManager.ORDER_PREFERENCE.setDetergentID("3110");
         }
     }
 
@@ -208,6 +201,7 @@ public class OrderPreferences extends AppCompatActivity {
         tw.setBackgroundResource(R.drawable.shape_orange);
 //        tw.setTextColor(ContextCompat.getColor(this, R.color.black));
         tw.setTextColor(Color.parseColor("#182085"));
+        tw.setTypeface(tw.getTypeface(), Typeface.BOLD);
         tw.setTextSize(16);
     }
 
@@ -251,6 +245,34 @@ public class OrderPreferences extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        if (From != null) {
+            if (From.equalsIgnoreCase("SelectService")) {
+                Intent orderPreferences = new Intent(OrderPreferences.this, NewOrder.class);
+                orderPreferences.putExtra("From", "SelectService");
+                startActivity(orderPreferences);
+                finish();
+
+            } else if (From.equalsIgnoreCase("IntroFinishFragment")) {
+                Intent toIntro = new Intent(OrderPreferences.this, Intro.class);
+                toIntro.putExtra("From", "IntroFinishFragment");
+                startActivity(toIntro);
+                finish();
+            } else {
+                Intent toLocker = new Intent(OrderPreferences.this, MyAcccount.class);
+                startActivity(toLocker);
+                finish();
+
+
+            }
+        } else {
+            Intent toLocker = new Intent(OrderPreferences.this, MyAcccount.class);
+            startActivity(toLocker);
+            finish();
+        }
+
+
     }
 
     public void setDryerSheet(String s) {

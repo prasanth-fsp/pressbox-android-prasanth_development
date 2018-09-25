@@ -1,9 +1,12 @@
 package com.usepressbox.pressbox;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.test.mock.MockPackageManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +38,8 @@ public class LandingScreen extends AppCompatActivity {
     @BindView(R.id.linear_layout_login) LinearLayout linear_layout_login;
     @BindView(R.id.btn_intro_video)LinearLayout introvideo;
     @BindView(R.id.btn_intro_arrow)ImageView introarrow;
+    private static final int REQUEST_CODE_PERMISSION = 0;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,12 @@ public class LandingScreen extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
+        if (ActivityCompat.checkSelfPermission(this, mPermission)
+                != MockPackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{mPermission},
+                    REQUEST_CODE_PERMISSION);
+        }
         if (getIntent().getExtras() != null) {
 
             for (String key : getIntent().getExtras().keySet()) {

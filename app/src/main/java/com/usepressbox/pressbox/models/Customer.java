@@ -1,6 +1,7 @@
 package com.usepressbox.pressbox.models;
 
 import android.content.Context;
+
 import com.usepressbox.pressbox.utils.ApiUrlGenerator;
 import com.usepressbox.pressbox.utils.Constants;
 import com.usepressbox.pressbox.utils.SessionManager;
@@ -29,6 +30,12 @@ public class Customer {
     private String expMonth;
     private String cardNumber;
     private String csc;
+    private String streetAddress;
+    private String streetLongAddress;
+    private String userCity;
+    private String state;
+    private String country;
+    private String zipcode;
 
     public String getCsc() {
         return csc;
@@ -139,7 +146,55 @@ public class Customer {
         this.address = address;
     }
 
-    public Customer(){
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public String getStreetLongAddress() {
+        return streetLongAddress;
+    }
+
+    public void setStreetLongAddress(String streetLongAddress) {
+        this.streetLongAddress = streetLongAddress;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getUserCity() {
+        return userCity;
+    }
+
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
+    }
+
+    public Customer() {
         this.name = "";
         this.lastName = "";
         this.email = "";
@@ -150,7 +205,7 @@ public class Customer {
         this.promoCode = "";
     }
 
-    public Customer(String name, String lastName, String email, String phone, String password, String city, int id, String promoCode){
+    public Customer(String name, String lastName, String email, String phone, String password, String city, int id, String promoCode) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -162,9 +217,9 @@ public class Customer {
     }
 
 
-    public ApiCallParams create(){
+    public ApiCallParams create() {
 
-        String endpoint= "customers/create";
+        String endpoint = "customers/create";
         String url = ApiUrlGenerator.getApiUrl(endpoint);
 
         HashMap<String, String> namevaluepair = new HashMap<String, String>();
@@ -177,9 +232,9 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams updateProfile (Context context) throws Exception {
+    public ApiCallParams updateProfile(Context context) throws Exception {
 
-        String endpoint= "customers/updateProfile";
+        String endpoint = "customers/updateProfile";
         String url = ApiUrlGenerator.getApiUrl(endpoint);
 
         HashMap<String, String> namevaluepair = new HashMap<String, String>();
@@ -195,9 +250,54 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams validate(){
+    public ApiCallParams updateUSerAddress(Context context) throws Exception {
 
-        String endpoint= "customers/validate";
+        String endpoint = "customers/updateProfile";
+        String url = null;
+        HashMap<String, String> namevaluepair = null;
+        try {
+            url = ApiUrlGenerator.getApiUrl(endpoint);
+
+            namevaluepair = new HashMap<String, String>();
+            namevaluepair.put("token", Constants.TOKEN);
+            namevaluepair.put("sessionToken", new SessionManager(context).getSessionToken());
+            if(streetAddress!= null)
+                namevaluepair.put("address1", streetAddress);
+
+            if(streetLongAddress != null)
+                namevaluepair.put("address2", streetLongAddress);
+
+            if(userCity != null)
+            namevaluepair.put("city", userCity);
+
+            if(state != null)
+            namevaluepair.put("state", state);
+
+            if(zipcode != null)
+            namevaluepair.put("zip", zipcode);
+
+
+            if(name != null)
+            namevaluepair.put("firstName", name);
+
+            if(lastName != null)
+            namevaluepair.put("lastName", lastName);
+
+            if(phone != null)
+            namevaluepair.put("phone", phone);
+
+            namevaluepair.put("starchOnShirts_id", starchOnShirtsId);
+            namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ApiCallParams(namevaluepair, url, endpoint);
+    }
+
+    public ApiCallParams validate() {
+
+        String endpoint = "customers/validate";
         String url = ApiUrlGenerator.getApiUrl(endpoint);
 
         HashMap<String, String> namevaluepair = new HashMap<String, String>();
@@ -210,7 +310,7 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams sendForgotPasswordEmail(){
+    public ApiCallParams sendForgotPasswordEmail() {
 
         String endpoint = "customers/sendForgotPasswordEmail";
 
@@ -225,7 +325,7 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams details(Context context){
+    public ApiCallParams details(Context context) {
 
         String endpoint = "customers/details";
 
@@ -240,7 +340,7 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams updateBillling(Context context){
+    public ApiCallParams updateBillling(Context context) {
 
         String endpoint = "customers/updateBilling";
         String url = ApiUrlGenerator.getApiUrl(endpoint);
@@ -260,7 +360,7 @@ public class Customer {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams savePromoCode(Context context){
+    public ApiCallParams savePromoCode(Context context) {
 
         String endpoint = "customers/addCoupon";
 
@@ -275,4 +375,6 @@ public class Customer {
 
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
+
+
 }

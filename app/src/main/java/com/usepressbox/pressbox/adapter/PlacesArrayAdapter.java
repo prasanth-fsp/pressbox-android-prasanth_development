@@ -64,13 +64,20 @@ public class PlacesArrayAdapter
     private ArrayList<PlaceAutocomplete> getPredictions(CharSequence constraint) {
         if (mGoogleApiClient != null) {
             Log.i(TAG, "Executing autocomplete query for: " + constraint);
+
+            AutocompleteFilter filter = new AutocompleteFilter.Builder()
+                    .setCountry("US")
+                    .build();
+
             PendingResult<AutocompletePredictionBuffer> results =
                     Places.GeoDataApi
                             .getAutocompletePredictions(mGoogleApiClient, constraint.toString(),
-                                    mBounds, mPlaceFilter);
+                                    mBounds, filter);
+
+
             // Wait for predictions, set the timeout.
             AutocompletePredictionBuffer autocompletePredictions = results
-                    .await(100, TimeUnit.SECONDS);
+                    .await(60, TimeUnit.SECONDS);
             final Status status = autocompletePredictions.getStatus();
             if (!status.isSuccess()) {
                 Toast.makeText(getContext(), "Error: " + status.toString(),

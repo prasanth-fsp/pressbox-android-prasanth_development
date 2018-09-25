@@ -102,19 +102,19 @@ public class Login extends AppCompatActivity {
     @OnClick(R.id.btn_sign_in)
     void login() {
 
-        if (username.getText().toString().length() > 0) {
-            if (new ValidateCheckingClass().emailValidate(username.getText().toString())) {
+        if (username.getText().toString().trim().length() > 0) {
+            if (new ValidateCheckingClass().emailValidate(username.getText().toString().trim())) {
 
                 if (password.getText().toString().length() > 0) {
                     if (UtilityClass.isConnectingToInternet(getApplicationContext())) {
 
                         if (SessionManager.CUSTOMER == null)
                             SessionManager.CUSTOMER = new Customer();
-                        SessionManager.CUSTOMER.setEmail(username.getText().toString());
+                        SessionManager.CUSTOMER.setEmail(username.getText().toString().trim());
                         SessionManager.CUSTOMER.setPassword(password.getText().toString());
-                        new BackgroundTask(this, SessionManager.CUSTOMER.validate());
+                        new BackgroundTask(this, SessionManager.CUSTOMER.validate(),"Login");
                     } else {
-                        Toast.makeText(Login.this, "Please check you network connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Please check your network connection", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(Login.this, getResources().getString(R.string.toast_password), Toast.LENGTH_SHORT).show();

@@ -78,13 +78,22 @@ public class SessionManager {
         return sharedPreferences.getString("notificationCode", "");
     }
 
-    public void saveUserAddres(String s){
+    public void saveUserAddress(String s){
         sharedPreferences.edit().putString("userAddress", s).commit();
     }
-
-    public String getUserAddres() {
+    public String getUserAddress() {
         return sharedPreferences.getString("userAddress", null);
     }
+
+    public String getUserShortAddress() {
+        return sharedPreferences.getString("userShortAddress", null);
+    }
+
+
+    public void saveUserShortAddress(String s){
+        sharedPreferences.edit().putString("userShortAddress", s).commit();
+    }
+
 
     public void saveUserGeoLocation(String s){
         sharedPreferences.edit().putString("UserGeoLocation", s).commit();
@@ -125,6 +134,7 @@ public class SessionManager {
         saveUserName("");
         saveSessionToken("");
         SessionManager.CUSTOMER = null;
+        SessionManager.ORDER_PREFERENCE = null;
         sharedPreferences.edit().clear().apply();
     }
 

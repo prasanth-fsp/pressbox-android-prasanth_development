@@ -49,7 +49,7 @@
             <TextView
                 style="@style/onboard_description_style"
                 android:layout_marginRight="@dimen/commonSpace"
-                android:layout_marginStart="@dimen/commonSpace"
+                android:layout_marginLeft="@dimen/commonSpace"
                 android:gravity="center"
                 android:text="@string/pickuptorder_desc"
                 android:textAlignment="inherit" />

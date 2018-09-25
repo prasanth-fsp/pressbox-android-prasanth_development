@@ -64,8 +64,8 @@ public class Order {
     public ApiCallParams claimsCreate(Context context) {
 
         String endpoint = "claims/create";
-//        String url = "http://droplocker.com/api/v2_0/claims/create";
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
+        String url = "http://droplocker.com/api/v2_0/claims/create";
+//        String url = ApiUrlGenerator.getApiUrl(endpoint);
 
         HashMap<String, String> namevaluepair = new HashMap<String, String>();
         namevaluepair.put("token", Constants.TOKEN);
@@ -79,20 +79,14 @@ public class Order {
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
 
-    public ApiCallParams claims_Create(Context context) {
-
-        String endpoint = "claims/create";
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
-
-
-        return new ApiCallParams(null, url, endpoint);
-    }
 
     public ApiCallParams getClaims(Context context) {
+        /*Please dont touch this before confirming from Architect*/
+        String url = "http://droplocker.com/api/v2_0/customers/getClaims";
 
         String endpoint = "customers/getClaims";
 
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
+//        String url = ApiUrlGenerator.getApiUrl(endpoint);
 
         HashMap<String, String> namevaluepair = new HashMap<String, String>();
         namevaluepair.put("token", Constants.TOKEN);
@@ -101,6 +95,21 @@ public class Order {
         namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
         return new ApiCallParams(namevaluepair, url, endpoint);
     }
+    public ApiCallParams getOrders(Context context) {
+        String url = "http://droplocker.com/api/v2_0/customers/getOrders";
+
+        String endpoint = "customers/getOrders";
+
+//        String url = ApiUrlGenerator.getApiUrl(endpoint);
+
+        HashMap<String, String> namevaluepair = new HashMap<String, String>();
+        namevaluepair.put("token", Constants.TOKEN);
+        namevaluepair.put("sessionToken", new SessionManager(context).getSessionToken());
+        namevaluepair.put("business_id", Constants.BUSINESS_ID);
+        namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
+        return new ApiCallParams(namevaluepair, url, endpoint);
+    }
+
 
     public ApiCallParams getServiceType(Context context) {
 
@@ -124,7 +133,7 @@ public class Order {
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("token", Constants.TOKEN);
-        params.put("address", new SessionManager(context).getUserAddres());
+        params.put("address", new SessionManager(context).getUserAddress());
         params.put("geolocation", new SessionManager(context).getUserGeoLocation());
 
 //        params.put("address","30 Park Avenue");

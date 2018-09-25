@@ -1,11 +1,7 @@
 package com.usepressbox.pressbox.asyntasks;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,32 +9,30 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.usepressbox.pressbox.R;
 import com.usepressbox.pressbox.adapter.OrdersAdapter;
-import com.usepressbox.pressbox.interfaces.IConfirmOrderType;
+import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
+import com.usepressbox.pressbox.interfaces.IPromoCodeStatusListener;
 import com.usepressbox.pressbox.interfaces.ISelectServiceListener;
 import com.usepressbox.pressbox.models.ApiCallParams;
 import com.usepressbox.pressbox.models.GetOrdersModel;
-import com.usepressbox.pressbox.models.Order;
 import com.usepressbox.pressbox.support.CustomProgressDialog;
 import com.usepressbox.pressbox.support.CustomerDetails;
 import com.usepressbox.pressbox.support.ServerResponse;
 import com.usepressbox.pressbox.support.ServiceTypeDetails;
 import com.usepressbox.pressbox.support.VolleyResponseListener;
-import com.usepressbox.pressbox.ui.activity.order.NewOrder;
+import com.usepressbox.pressbox.ui.MyAcccount;
 import com.usepressbox.pressbox.ui.activity.order.Orders;
-import com.usepressbox.pressbox.ui.activity.order.WelcomeOrder;
 import com.usepressbox.pressbox.ui.activity.register.Intro;
 import com.usepressbox.pressbox.ui.activity.register.Login;
-import com.usepressbox.pressbox.ui.fragment.IntroTipFragment;
-import com.usepressbox.pressbox.ui.fragment.NewLockerFragment;
+import com.usepressbox.pressbox.ui.activity.register.Register;
 import com.usepressbox.pressbox.ui.fragment.SelectServices;
 import com.usepressbox.pressbox.utils.Constants;
 import com.usepressbox.pressbox.utils.SessionManager;
+import com.usepressbox.pressbox.utils.UtilityClass;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,16 +55,22 @@ public class BackgroundTask {
     private OrdersAdapter adapter;
     private ISelectServiceListener iSelectServiceListener;
     private FragmentManager fragmentManager;
-    private IConfirmOrderType iConfirmOrderType;
+    private IConfirmOrderTypeListener iConfirmOrderType;
+    private IPromoCodeStatusListener iPromoCodeStatusListener;
 
     private CustomProgressDialog progress;
     TextView lblMessage;
-    private String from;
 
     public BackgroundTask(Activity context, ApiCallParams apiCallParams, String tag) {
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.tag = tag;
+
+        if (apiCallParams.getTag().equalsIgnoreCase("customers/validate") ||
+                (apiCallParams.getTag().equalsIgnoreCase("customers/create")) ||
+                (apiCallParams.getTag().equalsIgnoreCase("customers/addCoupon"))) {
+            progress = CustomProgressDialog.show(context, false);
+        }
         ResponseTask();
     }
 
@@ -79,6 +79,9 @@ public class BackgroundTask {
         this.apiCallParams = apiCallParams;
         this.tag = tag;
         this.fragmentManager = fragmentManager;
+        progress = CustomProgressDialog.show(context, false);
+
+
         ResponseTask();
     }
 
@@ -100,23 +103,41 @@ public class BackgroundTask {
 
 
     public BackgroundTask(Activity context, SelectServices selectServices, ApiCallParams apiCallParams) {
+
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.iSelectServiceListener = selectServices;
+
+        progress = CustomProgressDialog.show(context, false);
+
         ResponseTask();
     }
 
-    public BackgroundTask(Activity activity, ApiCallParams apiCallParams, IConfirmOrderType iConfirmOrderType, String from) {
+    public BackgroundTask(Activity activity, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, String from) {
         this.context = activity;
         this.apiCallParams = apiCallParams;
         this.iConfirmOrderType = iConfirmOrderType;
-        this.from = from;
+        this.tag = from;
+        progress = CustomProgressDialog.show(context, false);
+
+
+        ResponseTask();
+    }
+    public BackgroundTask(Activity activity, ApiCallParams apiCallParams, IPromoCodeStatusListener iPromoCodeStatusListener, String from) {
+        this.context = activity;
+        this.apiCallParams = apiCallParams;
+        this.iPromoCodeStatusListener = iPromoCodeStatusListener;
+        this.tag = from;
+        progress = CustomProgressDialog.show(context, false);
+
+
         ResponseTask();
     }
 
+
+
     public void ResponseTask() {
 
-        progress = CustomProgressDialog.show(context,  false);
 
         if (tag.equals("bleach") || tag.equals("dryerSheets") || tag.equals("softner") || tag.equals("login")) {
 
@@ -134,19 +155,24 @@ public class BackgroundTask {
         new ServerResponse(apiCallParams.getUrl()).getJSONObjectfromURL(ServerResponse.RequestType.POST, apiCallParams.getParams(), context, new VolleyResponseListener() {
             @Override
             public void onError(String message) {
+                if (progress != null)
+                    progress.dismiss();
 
-                progress.dismiss();
+//                UtilityClass.showAlertWithOk(context, "null", message, "BackgroundTask");
 
             }
 
             @Override
             public void onResponse(String response) {
-                progress.dismiss();
-
-                if (tag.equals("orderPreferences") || tag.equals("bleach") || tag.equals("dryerSheets") || tag.equals("softner") || tag.equals("login")) {
-                } else {
-                    if(progress.isShowing())
+                if (progress != null)
                     progress.dismiss();
+
+                if (tag.equals("orderPreferences") || tag.equals("bleach") || tag.equals("dryerSheets") || tag.equals("softner") || tag.equals("login")  || tag.equalsIgnoreCase("nil")) {
+                } else {
+                    if (progress != null) {
+                        if (progress.isShowing())
+                            progress.dismiss();
+                    }
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -163,7 +189,7 @@ public class BackgroundTask {
 
                             case "customers/updateProfile":
                                 if (tag.equals("myAccount")) {
-                                    sessionManager.SetOnboard(false);
+//                                    sessionManager.SetOnboard(false);
 
                                     Intent toOrders = new Intent(context, Orders.class);
                                     context.startActivity(toOrders);
@@ -176,8 +202,14 @@ public class BackgroundTask {
                                     context.finish();
 
                                 } else {
+
+
                                     sessionManager.saveUserName(SessionManager.CUSTOMER.getEmail());
                                     sessionManager.savePassword(SessionManager.CUSTOMER.getPassword());
+
+                                    SaveUserAddressTask addressTask=new SaveUserAddressTask(context,SessionManager.CUSTOMER.updateUSerAddress(context),"Register");
+                                    addressTask.ResponseTask();
+
                                     Intent toLocker = new Intent(context, Intro.class);
                                     context.startActivity(toLocker);
                                     context.finish();
@@ -224,7 +256,7 @@ public class BackgroundTask {
                                 break;
 
                             case "customers/details":
-                                new CustomerDetails(jsonObject);
+                                new CustomerDetails(jsonObject,context);
 
                                 if (tag.equals("orderPreference")) {
 
@@ -244,20 +276,11 @@ public class BackgroundTask {
 
                             case "claims/create":
 
-//                                if (tag.equals("IntroFinishFragment")){
-//
-//                                    Fragment fragment = new IntroTipFragment();
-//                                    FragmentTransaction transaction =fragmentManager.beginTransaction();
-//                                    transaction.add(R.id.fragment, fragment);
-//                                    transaction.addToBackStack(null);
-//                                    transaction.commit();
-//                                }else {
                                 Intent toOrder = new Intent(context, Orders.class);
                                 toOrder.putExtra("From", "claims");
                                 context.startActivity(toOrder);
                                 context.finish();
 
-//                                }
 
                                 break;
 
@@ -273,6 +296,7 @@ public class BackgroundTask {
                                     GetOrdersModel model = new GetOrdersModel();
                                     model.setAddress(jsonObject1.getString("address"));
                                     model.setDate(jsonObject1.getString("updated"));
+//                                    model.setDate(jsonObject1.getString("dateCreated"));
                                     model.setLockerId(jsonObject1.getString("lockerName"));
                                     if (jsonObject1.has("status")) {
                                         model.setStatus(jsonObject1.getString("status"));
@@ -283,6 +307,8 @@ public class BackgroundTask {
                                     dataArray.add(model);
                                 }
 
+                                GetOrdersTask getOrdersTask=new GetOrdersTask(context,SessionManager.ORDER.getOrders(context),"BackgroungTask");
+                                getOrdersTask.ResponseTask();
                                 adapter.notifyDataSetChanged();
                                 swipe_refresh_layout.setRefreshing(false);
                                 break;
@@ -294,8 +320,10 @@ public class BackgroundTask {
                             case "customers/addCoupon":
                                 SessionManager.CUSTOMER.setPromoCode("");
 
-                                if (from.equalsIgnoreCase("NewLockerFragment")) {
+                                if (tag.equalsIgnoreCase("NewLockerFragment")) {
                                     iConfirmOrderType.promoCodeStatus(jsonObject.optString("status"), jsonObject.optString("message"));
+                                } else {
+                                    iPromoCodeStatusListener.promoCodeStatus(jsonObject.optString("status"), jsonObject.optString("message"));
                                 }
 
                                 break;
@@ -341,25 +369,12 @@ public class BackgroundTask {
 
 
                             if (data.equals("[]") || data.isEmpty() || data.equalsIgnoreCase("") || data.equalsIgnoreCase("null")) {
-//                                NewOrder newOrder = (NewOrder) context;
-//                                newOrder.setFragment(message);
-                                Intent toOrder = new Intent(context, Orders.class);
-                                toOrder.putExtra("From", "nolocker");
-                                toOrder.putExtra("Data", message);
-                                context.startActivity(toOrder);
-                                context.finish();
+
+                                iConfirmOrderType.LockerStatus(message);
 
                             } else {
-//
-//                                NewOrder newOrder = (NewOrder) context;
-//                                newOrder.setFragment(data);
 
-                                Intent toOrder = new Intent(context, Orders.class);
-                                toOrder.putExtra("From", "nolocker");
-                                toOrder.putExtra("Data", message);
-                                context.startActivity(toOrder);
-                                context.finish();
-
+                                iConfirmOrderType.LockerStatus(message);
 
                             }
 
@@ -381,12 +396,15 @@ public class BackgroundTask {
 
                         } else {
 
-                            switch (from) {
+                            switch (tag) {
                                 case "NewLockerFragment":
                                     iConfirmOrderType.promoCodeStatus(jsonObject.optString("status"), jsonObject.optString("message"));
                                     break;
+                                case "MyaccountClass":
+                                    iPromoCodeStatusListener.promoCodeStatus(jsonObject.optString("status"), jsonObject.optString("message"));
+                                    break;
                                 default:
-                                    Toast.makeText(context,message, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -401,10 +419,11 @@ public class BackgroundTask {
                                 break;
                         }
 
-                        switch (from) {
+                        switch (tag) {
                             case "NewLockerFragment":
                                 iConfirmOrderType.promoCodeStatus(jsonObject.optString("status"), jsonObject.optString("message"));
                                 break;
+
                             default:
                                 Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                         }
@@ -416,7 +435,8 @@ public class BackgroundTask {
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    progress.dismiss();
+                    if (progress != null)
+                        progress.dismiss();
                 }
             }
         });

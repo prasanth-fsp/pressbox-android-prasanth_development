@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.usepressbox.pressbox.R;
-import com.usepressbox.pressbox.interfaces.IConfirmOrderType;
+import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
 import com.usepressbox.pressbox.models.LocationModel;
 
 import java.util.ArrayList;
@@ -26,11 +26,11 @@ public class ConfirmOrderTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private List<LocationModel> locationModelList;
     private Context context;
     private int itemLayout;
-    private IConfirmOrderType iConfirmOrderType;
+    private IConfirmOrderTypeListener iConfirmOrderType;
 
 
     public ConfirmOrderTypeAdapter(Context context, int itemLayout, ArrayList<LocationModel> data,
-                                   IConfirmOrderType iConfirmOrderType) {
+                                   IConfirmOrderTypeListener iConfirmOrderType) {
         this.context = context;
         this.itemLayout = itemLayout;
         locationModelList = data;

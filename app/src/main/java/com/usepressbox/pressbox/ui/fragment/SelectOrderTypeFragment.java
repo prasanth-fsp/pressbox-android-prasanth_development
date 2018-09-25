@@ -159,7 +159,7 @@ public class SelectOrderTypeFragment extends Fragment implements IOrderTypeListe
 
         for (int i = 0; i < 6; i++) {
             OrderTypeModel orderTypeModel = new OrderTypeModel();
-            orderTypeModel.setOrderTypeImg(String.valueOf(R.drawable.notification_icon));
+//            orderTypeModel.setOrderTypeImg(String.valueOf(R.drawable.notification_icon));
             switch (i) {
                 case 0:
                     orderTypeModel.setOrderTypeName("Dry Clean & Press");

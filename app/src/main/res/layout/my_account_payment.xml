@@ -34,6 +34,7 @@
             android:textSize="@dimen/text_normal" />
 
         <TextView
+            android:id="@+id/tw_my_account_last_four_card_numbers"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
@@ -42,8 +43,7 @@
             android:gravity="center_vertical"
             android:text="***4858"
             android:textColor="@color/text_light"
-            android:textSize="@dimen/text_normal"
-            android:id="@+id/tw_my_account_last_four_card_numbers" />
+            android:textSize="@dimen/text_normal" />
 
     </LinearLayout>
 
@@ -55,9 +55,9 @@
 
             <ImageView
                 android:id="@+id/im_card"
-                android:layout_width="35dp"
+                android:layout_width="31dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="15dp"
                 android:src="@drawable/card" />
 
@@ -120,15 +120,68 @@
 
     <View style="@style/Custom_view_light"></View>
 
-    <EditText
-        android:id="@+id/et_my_account_promo_code"
+
+
+    <LinearLayout
+        android:id="@+id/promocode_layout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commonMargin5"
+        android:layout_marginRight="@dimen/commonMargin5"
         android:background="@android:color/transparent"
-        android:fontFamily="fonts/ProximaNova-Light.otf"
-        android:hint="Promo Code"
-        android:textSize="@dimen/text_normal" />
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/promocode_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:scaleType="center"
+            android:src="@drawable/ic_promocode" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/commonMargin5"
+            android:layout_marginLeft="@dimen/commonMargin5"
+            android:layout_weight="55"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_my_account_promo_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="true"
+                android:fontFamily="fonts/ProximaNova-Light.otf"
+                android:hint="Promo Code"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/text_normal" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/apply_button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/commonMargin5"
+            android:layout_weight="30"
+            android:background="@drawable/promo_code_bg"
+            android:fontFamily="fonts/ProximaNova-SemiBold.otf"
+            android:gravity="center"
+            android:text="@string/apply"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_normal" />
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

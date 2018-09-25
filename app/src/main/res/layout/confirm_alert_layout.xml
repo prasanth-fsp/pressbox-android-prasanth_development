@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/order_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,8 +23,7 @@
             android:maxHeight="35dp"
             android:minHeight="35dp"
             android:visibility="gone"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_right_round" />
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/alert_heading"

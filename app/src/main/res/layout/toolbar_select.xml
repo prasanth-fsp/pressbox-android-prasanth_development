@@ -37,15 +37,19 @@
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textSize="@dimen/toolbar_title"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+      />
 
         <ImageView
             android:id="@+id/toolbar_image"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
+            android:maxHeight="?android:attr/actionBarSize"
+            android:paddingTop="@dimen/commonMargin5"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@drawable/pressboxlogo"
+            android:src="@drawable/logo"
+            android:background="@color/pressbox"
             android:visibility="gone" />
 
         <TextView

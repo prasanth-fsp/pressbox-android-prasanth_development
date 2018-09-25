@@ -55,8 +55,8 @@ public class ShoeOrderType extends Fragment implements IShoecareServiceListener 
 
     @BindView(R.id.place_order_button)
     Button place_order_button;
-    ArrayList<String> shoecarelist = new ArrayList<String>();
-    ArrayList<String> shoecareoptions = new ArrayList<String>();
+    ArrayList<String> shoecarelist ;
+    ArrayList<String> shoecareoptions ;
     private SparseBooleanArray itemStateArray = new SparseBooleanArray();
 
     @Override
@@ -70,24 +70,17 @@ public class ShoeOrderType extends Fragment implements IShoecareServiceListener 
 
         v = inflater.inflate(R.layout.fragment_shoe_order_type, container, false);
         ButterKnife.bind(this, v);
+        place_order_button.setText("Next");
+
+
+        shoecarelist = new ArrayList<String>();
+        shoecareoptions = new ArrayList<String>();
+
 
         toolbar = (Toolbar) v.findViewById(R.id.tool_bar);
 
         setToolbarTitle();
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String backStateName = this.getClass().getName();
-
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack();
-                }
-
-
-
-            }
-        });
 
 
         String[] suboptions = {"Shoe cleaning", "Cleaning and waterproofing", "UGGs", "Heel tips", "Half sole replacement",
@@ -103,15 +96,20 @@ public class ShoeOrderType extends Fragment implements IShoecareServiceListener 
 
         return v;
     }
+    @OnClick(R.id.toolbar_left)
+    void cancel() {
 
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }
+    }
 
     public void setToolbarTitle() {
 
-        toolbar.setNavigationIcon(R.drawable.back);
-        cancel.setText("Cancel");
+//        toolbar.setNavigationIcon(R.drawable.back);
+        cancel.setText("Back");
         next.setVisibility(View.INVISIBLE);
         title.setText("New Order");
-
         if (Constants.register) {
             cancel.setVisibility(View.INVISIBLE);
         }
@@ -128,6 +126,7 @@ public class ShoeOrderType extends Fragment implements IShoecareServiceListener 
 
                 Fragment fragment = new NewLockerFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("shoecarelist", shoecarelist);
                 fragment.setArguments(bundle);
@@ -140,6 +139,7 @@ public class ShoeOrderType extends Fragment implements IShoecareServiceListener 
 //                Fragment fragment = new InstructionsFragment();
                 Fragment fragment = new NewLockerFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("shoecarelist", shoecarelist);
                 fragment.setArguments(bundle);

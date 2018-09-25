@@ -2,11 +2,10 @@ package com.usepressbox.pressbox.utils;
 
 import android.content.Context;
 
-import com.usepressbox.pressbox.interfaces.IConfirmOrderType;
+import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
 import com.usepressbox.pressbox.models.LocationModel;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -18,13 +17,13 @@ import java.util.Iterator;
 public class AbstractClass {
 
 
-
-    public void saveLocationData(Context context, JSONObject jsonObject, String from, IConfirmOrderType iConfirmOrderType,String nearBylocation) {
+    public void saveLocationData(Context context, JSONObject jsonObject, String from, IConfirmOrderTypeListener iConfirmOrderType, String nearBylocation) {
         switch (from) {
             case "getOrderType":
 
                 boolean isAddressMachCase = true;
 
+                SessionManager sessionManager = new SessionManager(context);
                 try {
                     JSONArray locationArray = jsonObject.optJSONArray("locations");
 
@@ -32,19 +31,52 @@ public class AbstractClass {
                     for (int i = 0; i < locationArray.length(); i++) {
                         JSONObject locationObject = locationArray.optJSONObject(i).optJSONObject("location");
 
-                        LocationModel locationModel=saveLocationModel(locationObject);
+                        LocationModel locationModel = saveLocationModel(locationObject);
 
-                        if(nearBylocation == null || nearBylocation.equalsIgnoreCase("null")) {
-                            if (new SessionManager(context).getUserAddres().toLowerCase().contains(locationObject.optString("address").toLowerCase())) {
-//                                if ("30 Park Avenue".toLowerCase().contains(locationObject.optString("address").toLowerCase())) {
-                                iConfirmOrderType.addressMatchCase("true", locationModel);
-                                isAddressMachCase = false;
-                                break;
+                        if (nearBylocation == null || nearBylocation.equalsIgnoreCase("null")) {
+                            if (sessionManager.getUserAddress() != null
+                                    && sessionManager.getUserShortAddress() != null) {
+
+                                /*Comparing user address with API address*/
+                                if ((sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("address").toLowerCase())
+                                        || (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("address").toLowerCase())))
+                                        && ((sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase()))
+                                        || (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase())))
+                                        && ((sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))
+                                        || (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase())))) {
+
+                                            iConfirmOrderType.addressMatchCase("true", locationModel);
+                                            isAddressMachCase = false;
+                                    break;
+                                }
+
                             }
-                        }
-                        else{
-                            if (nearBylocation.toLowerCase().contains(locationObject.optString("address").toLowerCase())) {
-//                                if ("30 Park Avenue".toLowerCase().contains(locationObject.optString("address").toLowerCase())) {
+                            else {
+                                if(sessionManager.getUserShortAddress() != null) {
+                                    if (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("address").toLowerCase())
+                                            && (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase()))
+                                            && (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
+
+                                        iConfirmOrderType.addressMatchCase("true", locationModel);
+                                        isAddressMachCase = false;
+                                        break;
+                                    }
+                                }else {
+                                    if (sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("address").toLowerCase())
+                                            && (sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase()))
+                                            && (sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
+
+                                        iConfirmOrderType.addressMatchCase("true", locationModel);
+                                        isAddressMachCase = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        } else {
+                            if (nearBylocation.toLowerCase().contains(locationObject.optString("address").toLowerCase())
+                                    && (nearBylocation.toLowerCase().contains(locationObject.optString("city").toLowerCase()))
+                                    && (nearBylocation.toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
+
                                 iConfirmOrderType.addressMatchCase("true", locationModel);
                                 isAddressMachCase = false;
                                 break;
@@ -59,6 +91,8 @@ public class AbstractClass {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    iConfirmOrderType.addressMatchCase("false", null);
+//                    UtilityClass.showAlertWithOk(context, "Alert!", "Please try again", "place-order");
                 }
 
                 break;
@@ -70,8 +104,12 @@ public class AbstractClass {
                     ArrayList<LocationModel> locationModelsList = new ArrayList<>();
                     for (int i = 0; i < locationJsonArray.length(); i++) {
                         JSONObject locationObject = locationJsonArray.optJSONObject(i).optJSONObject("location");
-                        LocationModel locationModel=saveLocationModel(locationObject);
-                        locationModelsList.add(locationModel);
+                        if(locationObject.has("locationType")) {
+                            if(locationObject.optString("locationType").equalsIgnoreCase("Concierge")){
+                                LocationModel locationModel = saveLocationModel(locationObject);
+                                locationModelsList.add(locationModel);
+                            }
+                        }
                     }
 
                     /*UpdateUI*/
@@ -88,20 +126,22 @@ public class AbstractClass {
             case "getLockerNumber":
 
                 try {
-                    ArrayList<JSONObject> jsonObjects=new ArrayList<>();
+                    ArrayList<JSONObject> jsonObjects = new ArrayList<>();
                     Iterator<String> iter = jsonObject.keys();
                     while (iter.hasNext()) {
                         String key = iter.next();
-                        if(key.equalsIgnoreCase("status"))
+                        if (key.equalsIgnoreCase("status"))
                             continue;
 
                         JSONObject value = jsonObject.optJSONObject(key);
                         jsonObjects.add(value);
                     }
-                    String lockerName= null;
-                    for (int i = 0; i <jsonObjects.size()    ; i++) {
+                    String lockerName = null;
+                    for (int i = 0; i < jsonObjects.size(); i++) {
                         JSONObject lockerObject = jsonObjects.get(i);
-                        lockerName=lockerObject.optString("lockerName");
+                        if(i == 0) {
+                            lockerName = lockerObject.optString("lockerName");
+                        }
                     }
                     /*UpdateUI*/
                     iConfirmOrderType.updateLockerNumber(lockerName);
@@ -130,7 +170,7 @@ public class AbstractClass {
             locationModel.setPublic_type(locationObject.optString("public"));
             locationModel.setLocationType(locationObject.optString("locationType"));
             locationModel.setIsHomeDelivery(String.valueOf(locationObject.optBoolean("isHomeDelivery")));
-        } catch (Exception  e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return locationModel;

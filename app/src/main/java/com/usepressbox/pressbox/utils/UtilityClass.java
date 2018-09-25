@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.location.Address;
@@ -13,11 +14,16 @@ import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +39,8 @@ import com.usepressbox.pressbox.ui.activity.order.Orders;
 
 import java.io.IOException;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by kruno on 12.04.16..
@@ -111,6 +119,13 @@ public class UtilityClass {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static void showKeyboard(View view, Context context) {
+        InputMethodManager mgr = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert mgr != null;
+        mgr.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+
     public static void setBusinessId(Context c, String s) {
         if (s.equals("Chicago")) {
             Constants.BUSINESS_ID = "37";
@@ -122,9 +137,10 @@ public class UtilityClass {
             Constants.BUSINESS_ID = "399";
         } else if (s.equals("Dallas")) {
             Constants.BUSINESS_ID = "426";
-        }else if (s.equals("Denver")) {
-            Constants.BUSINESS_ID = "150";
         }
+//        else if (s.equals("Denver")) {
+//            Constants.BUSINESS_ID = "150";
+//        }
         new SessionManager(c).saveBussinesId(s);
     }
 
@@ -214,26 +230,27 @@ public class UtilityClass {
     }
 
 
-    public static void showAlertWithOk(final Context context, String title, String message,String from) {
+    public static void showAlertWithOk(final Context context, String title, String message, String from) {
         final Dialog dialog = new Dialog(context, R.style.custom_dialog_theme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.confirm_alert_layout);
 
         TextView dialog_text = (TextView) dialog.findViewById(R.id.alert_heading);
         TextView dialog_message = (TextView) dialog.findViewById(R.id.alert_message);
-        ImageView image = (ImageView) dialog.findViewById(R.id.order_image);
+        AppCompatImageView image = (AppCompatImageView) dialog.findViewById(R.id.order_image);
         Button ok_btn = (Button) dialog.findViewById(R.id.ok_button);
 
-        if(from != null || !from.equalsIgnoreCase("null")) {
+        if (from != null || !from.equalsIgnoreCase("null")) {
             if (from.equalsIgnoreCase("promocode-success") || from.equalsIgnoreCase("confirm-order")) {
                 image.setVisibility(View.VISIBLE);
+                image.setImageResource(R.drawable.ic_right_round);
             }
         }
         /*Setting width dynamically*/
         Rect displayRectangle = new Rect();
-        Window window = ((Activity)context).getWindow();
+        Window window = ((Activity) context).getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.85f),ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.85f), ViewGroup.LayoutParams.WRAP_CONTENT);
 
         if (title == null || title.equalsIgnoreCase("null")) {
             dialog_text.setVisibility(View.GONE);
@@ -274,9 +291,9 @@ public class UtilityClass {
 
         /*Setting width dynamically*/
         Rect displayRectangle = new Rect();
-        Window window = ((Activity)context).getWindow();
+        Window window = ((Activity) context).getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.85f),ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.85f), ViewGroup.LayoutParams.WRAP_CONTENT);
 
         if (title == null || title.equalsIgnoreCase("null")) {
             dialog_text.setVisibility(View.GONE);
@@ -296,11 +313,11 @@ public class UtilityClass {
             public void onClick(View v) {
                 dialog.dismiss();
 
-                if(redirect != null || !redirect.equalsIgnoreCase("null")){
-                    if(redirect.equalsIgnoreCase("myaccount")){
+                if (redirect != null || !redirect.equalsIgnoreCase("null")) {
+                    if (redirect.equalsIgnoreCase("myaccount")) {
                         Intent intent = new Intent(context, MyAcccount.class);
                         context.startActivity(intent);
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     }
                 }
             }
@@ -311,7 +328,135 @@ public class UtilityClass {
 
     }
 
+    public static void showAlertWithEmailRedirect(final Context context, String title, String message, final String redirect) {
+        SpannableString spannableString = null;
+        final Dialog dialog = new Dialog(context, R.style.custom_dialog_theme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.confirm_alert_layout);
 
+        TextView dialog_text = (TextView) dialog.findViewById(R.id.alert_heading);
+        TextView dialog_message = (TextView) dialog.findViewById(R.id.alert_message);
+        Button ok_btn = (Button) dialog.findViewById(R.id.ok_button);
+        ImageView image = (ImageView) dialog.findViewById(R.id.order_image);
+
+
+        /*Setting width dynamically*/
+        Rect displayRectangle = new Rect();
+        Window window = ((Activity) context).getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.85f), ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+        if(redirect.equalsIgnoreCase("myaccount")){
+
+        if(message.contains("support@usepressbox.com")){
+                String keyWord = "support@usepressbox.com";
+                 spannableString = new SpannableString(message);
+
+
+                ClickableSpan clickableSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("plain/text");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@usepressbox.com"});
+                        context.startActivity(Intent.createChooser(intent, ""));
+                        dialog.dismiss();
+                    }
+                };
+
+
+                spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 0, dialog_message.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(clickableSpan, message.indexOf(keyWord), message.indexOf(keyWord) + keyWord.length(), 0);
+
+                spannableString.setSpan(new NonUnderlinedClickableSpan(keyWord), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }
+            else if(message.contains("support@usewashbox.com")){
+            String keyWord = "support@usewashbox.com";
+            spannableString = new SpannableString(message);
+
+
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("plain/text");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@usewashbox.com"});
+                    context.startActivity(Intent.createChooser(intent, ""));
+                    dialog.dismiss();
+                }
+            };
+
+
+            spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 0, dialog_message.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(clickableSpan, message.indexOf(keyWord), message.indexOf(keyWord) + keyWord.length(), 0);
+
+            spannableString.setSpan(new NonUnderlinedClickableSpan(keyWord), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        }
+        }
+
+
+        if (title == null || title.equalsIgnoreCase("null")) {
+            dialog_text.setVisibility(View.GONE);
+        } else {
+            dialog_text.setText(title);
+        }
+
+        if (message == null || message.equalsIgnoreCase("null")) {
+            dialog_message.setVisibility(View.GONE);
+        } else {
+            if(redirect.equalsIgnoreCase("myaccount")) {
+                if(message.contains("support@usepressbox.com")) {
+                    Spanned convertedString= Html.fromHtml(spannableString.toString());
+                    dialog_message.setText(convertedString);
+                    dialog_message.setAutoLinkMask(RESULT_OK);
+                    dialog_message.setMovementMethod(LinkMovementMethod.getInstance());
+                    dialog_message.setHighlightColor(Color.TRANSPARENT);
+
+                }else if(message.contains("support@usewashbox.com")){
+                    Spanned convertedString= Html.fromHtml(spannableString.toString());
+                    dialog_message.setText(convertedString);
+                    dialog_message.setAutoLinkMask(RESULT_OK);
+                    dialog_message.setMovementMethod(LinkMovementMethod.getInstance());
+                    dialog_message.setHighlightColor(Color.TRANSPARENT);
+                }else {
+                    dialog_message.setText(message);
+                }
+            }else {
+                dialog_message.setText(message);
+            }
+        }
+
+        ok_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.show();
+
+    }
+
+    public static class NonUnderlinedClickableSpan extends ClickableSpan {
+
+        String clicked;
+
+        public NonUnderlinedClickableSpan(String string) {
+            super();
+            clicked = string;
+        }
+
+        public void onClick(View tv) {
+
+        }
+
+        public void updateDrawState(TextPaint ds) {
+            ds.setColor(Color.BLACK);
+        }
+    }
 
     // convert address into location
     public static void getLocationFromAddress(String strAddress, Context context) {
@@ -327,10 +472,19 @@ public class UtilityClass {
             if (address == null) {
                 return;
             }
-            Address location = address.get(0);
+            Address location = null;
+            try {
+                location = address.get(0);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
 
             SessionManager sessionManager = new SessionManager(context);
-            sessionManager.saveUserGeoLocation(String.valueOf(location.getLatitude()) + "," + String.valueOf(location.getLongitude()));
+            try {
+                sessionManager.saveUserGeoLocation(String.valueOf(location.getLatitude()) + "," + String.valueOf(location.getLongitude()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,53 +1,36 @@
 package com.usepressbox.pressbox.ui.activity.order;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.MainThread;
 import android.support.annotation.RequiresApi;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,18 +38,16 @@ import com.usepressbox.pressbox.R;
 import com.usepressbox.pressbox.adapter.OnboardPageAdapter;
 import com.usepressbox.pressbox.adapter.OrdersAdapter;
 import com.usepressbox.pressbox.asyntasks.BackgroundTask;
+import com.usepressbox.pressbox.asyntasks.GetOrdersTask;
+import com.usepressbox.pressbox.interfaces.IOrderListListener;
 import com.usepressbox.pressbox.models.GetOrdersModel;
 import com.usepressbox.pressbox.models.Order;
 import com.usepressbox.pressbox.ui.MyAcccount;
-import com.usepressbox.pressbox.ui.fragment.SelectServices;
+import com.usepressbox.pressbox.utils.Constants;
 import com.usepressbox.pressbox.utils.SessionManager;
 import com.usepressbox.pressbox.utils.UtilityClass;
 
-import org.json.JSONArray;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,7 +61,7 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
  * Modified by Prasanth.S on 27/08/2018
  * This class is used to list the placed orders by the customer
  */
-public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, IOrderListListener {
 
     private Toolbar toolbar;
     static Orders orders;
@@ -138,10 +119,10 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
         orders = this;
 
 
-        sessionManager = new SessionManager(Orders.this);
+       /* sessionManager = new SessionManager(Orders.this);
         if (!sessionManager.getOnboardStatus()) {
             showOnBoardDialog();
-        }
+        }*/
 
 
         dataArray = new ArrayList<>();
@@ -227,7 +208,7 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
         Rect displayRectangle = new Rect();
         Window window = Orders.this.getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.8f), (int) (displayRectangle.height() * 0.75f));
+        dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.8f), (int) (displayRectangle.height() * 0.7f));
 //        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, (int)(displayRectangle.height() * 0.8f));
 
         dialog.setCanceledOnTouchOutside(false);
@@ -354,6 +335,11 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem cancelMenuItem = menu.getItem(0);
+
+        /*Added by Prasanth.s*/
+        VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(getResources(), R.drawable.ic_question, null);
+        cancelMenuItem.setIcon(vectorDrawableCompat);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -364,10 +350,12 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
 
         if (id == R.id.action_mail) {
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@usepressbox.com"});
-            startActivity(Intent.createChooser(intent, ""));
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.setType("plain/text");
+//            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@usepressbox.com"});
+//            startActivity(Intent.createChooser(intent, ""));
+
+            UtilityClass.goToUrl(this, Constants.SUPPORT);
             return true;
         }
 
@@ -378,11 +366,9 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
     @Override
     public void onBackPressed() {
 
-        Log.e("Back", "Orders");
-
         if (doubleBackToExitPressedOnce) {
-
-            super.onBackPressed();
+            finish();
+//            super.onBackPressed();
             return;
         }
 
@@ -403,86 +389,41 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
         swipe_refresh_layout.setRefreshing(true);
         if (SessionManager.ORDER == null) SessionManager.ORDER = new Order();
         new BackgroundTask(this, SessionManager.ORDER.getClaims(this), lw_orders, swipe_refresh_layout, adapter, dataArray);
+
+
+        GetOrdersTask getOrdersTask = new GetOrdersTask(this, SessionManager.ORDER.getOrders(this), "BackgroungTask");
+        getOrdersTask.ResponseTask();
     }
 
     public void showalert() {
         if (from.equals("IntroFinishFragment") || from.equals("claims")) {
-           /* AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-            alertDialogBuilder.setMessage(getResources().getString(R.string.message)).setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            dialog.dismiss();
-
-
-                        }
-                    });
-
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();*/
-
-            UtilityClass.showAlertWithOk(this, "Thanks for your Order!", "Details will be sent to your email shortly.","confirm-order");
+            UtilityClass.showAlertWithOk(this, "Thanks for your Order!", "Details will be sent to your email shortly.", "confirm-order");
 
 
         } else if (from.equals("nolocker")) {
             Bundle b = getIntent().getExtras();
             if (b != null) {
                 String sourceString = b.getString("Data");
-                Log.e("data", sourceString);
+                UtilityClass.showAlertWithEmailRedirect(this, "null", sourceString, "null");
 
-
-                final TextView tx1 = new TextView(this);
-
-                tx1.setGravity(Gravity.CENTER_HORIZONTAL);
-                tx1.setPadding(0, 25, 0, 0);
-                tx1.setAutoLinkMask(RESULT_OK);
-                tx1.setMovementMethod(LinkMovementMethod.getInstance());
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-                builder.setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                    }
-                                })
-                        .setView(tx1);
-
-                final AlertDialog dialog = builder.create();
-                sourceString = sourceString + "\n Contact Support";
-                String keyWord = "Contact Support";
-
-                Log.e("sourceString", sourceString);
-                SpannableString spannableString = new SpannableString(sourceString);
-
-
-                ClickableSpan clickableSpan = new ClickableSpan() {
-                    @Override
-                    public void onClick(View widget) {
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("plain/text");
-                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@usepressbox.com"});
-                        startActivity(Intent.createChooser(intent, ""));
-                        dialog.dismiss();
-                    }
-                };
-
-                spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 0, tx1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableString.setSpan(clickableSpan, sourceString.indexOf(keyWord), sourceString.indexOf(keyWord) + keyWord.length(), 0);
-
-                spannableString.setSpan(new NonUnderlinedClickableSpan(keyWord), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                tx1.setText(spannableString);
-
-                dialog.show();
             }
         } else {
 
         }
     }
+
+    @Override
+    public void orderTypeData(ArrayList<GetOrdersModel> orderTypeModels) {
+        if (orderTypeModels != null) {
+            dataArray.clear();
+            dataArray = orderTypeModels;
+            adapter.setData(orderTypeModels);
+            adapter.notifyDataSetChanged();
+            swipe_refresh_layout.setRefreshing(false);
+        }
+    }
+
 
     public class NonUnderlinedClickableSpan extends ClickableSpan {
 

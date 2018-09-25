@@ -4,8 +4,6 @@ package com.usepressbox.pressbox.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -132,8 +130,9 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
         if (UtilityClass.isConnectingToInternet(getActivity())) {
             new BackgroundTask(getActivity(), this, SessionManager.ORDER.getServiceType(getActivity()));
         } else {
-            Toast.makeText(getActivity(), "Please check you network connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please check your network connection", Toast.LENGTH_SHORT).show();
         }
+
 
         return v;
     }
@@ -159,7 +158,6 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
             setIcons(imageView, value, "false");
 
         }
-
 
     }
 
@@ -252,6 +250,7 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
+
         adapter = new SelectservicesAdapter(getActivity(), this, selectoptions);
         recyclerView.setAdapter(adapter);
 
@@ -260,7 +259,6 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
     @OnClick(R.id.place_order_button)
     void next() {
 
-        String backStateName = this.getClass().getName();
         selectids = getSelectIds(selectlist, selectvalues);
         String ordertype = TextUtils.join(", ", selectids);
         SessionManager.ORDER.setOrderType(ordertype);
@@ -278,34 +276,14 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
                 transaction.replace(R.id.fragment, fragment);
-                transaction.addToBackStack(backStateName);
                 transaction.commit();
 
-
             } else {
-
-
-                if (Constants.register) {
-
                     Fragment fragment = new NewLockerFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
                     transaction.replace(R.id.fragment, fragment);
-                    transaction.addToBackStack(backStateName);
                     transaction.commit();
-
-
-                } else {
-
-                    Fragment fragment = new NewLockerFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
-                    transaction.replace(R.id.fragment, fragment);
-                    transaction.addToBackStack(backStateName);
-                    transaction.commit();
-
-                }
-
 
             }
 //            } else {
@@ -375,7 +353,6 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
 
     @OnClick(R.id.set_order_preference_layout)
     void orderPreference() {
-        preference_img.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.select));
         Intent orderPreferences = new Intent(getContext(), OrderPreferences.class);
         orderPreferences.putExtra("From", "SelectService");
         startActivity(orderPreferences);
