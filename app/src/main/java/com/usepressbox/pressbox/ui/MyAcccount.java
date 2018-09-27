@@ -543,8 +543,8 @@ public class MyAcccount extends AppCompatActivity implements
         Intent toLandingScreen = new Intent(MyAcccount.this, LandingScreen.class);
         startActivity(toLandingScreen);
         Constants.firstTime = false;
-        finish();
-        Orders.getInstance().finish();
+//        Orders.getInstance().finish();
+        finishAffinity();
 
     }
 
@@ -831,40 +831,7 @@ public class MyAcccount extends AppCompatActivity implements
     }
 
 
-    /**
-     * Used to scroll to the given view.
-     *
-     * @param scrollViewParent Parent ScrollView
-     * @param view             View to which we need to scroll.
-     */
-    private void scrollToView(final NestedScrollView scrollViewParent, final View view) {
-        // Get deepChild Offset
-        Point childOffset = new Point();
-        getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
-        // Scroll to child.
-        scrollViewParent.smoothScrollTo(0, childOffset.y);
-    }
 
-    /**
-     * Used to get deep child offset.
-     * <p/>
-     * 1. We need to scroll to child in scrollview, but the child may not the direct child to scrollview.
-     * 2. So to get correct child position to scroll, we need to iterate through all of its parent views till the main parent.
-     *
-     * @param mainParent        Main Top parent.
-     * @param parent            Parent.
-     * @param child             Child.
-     * @param accumulatedOffset Accumulated Offset.
-     */
-    private void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset) {
-        ViewGroup parentGroup = (ViewGroup) parent;
-        accumulatedOffset.x += child.getLeft();
-        accumulatedOffset.y += child.getTop();
-        if (parentGroup.equals(mainParent)) {
-            return;
-        }
-        getDeepChildOffset(mainParent, parentGroup.getParent(), parentGroup, accumulatedOffset);
-    }
 
     @Override
     public void promoCodeStatus(String status, String message) {
@@ -918,27 +885,35 @@ public class MyAcccount extends AppCompatActivity implements
             SessionManager.CUSTOMER.setEmail(customerObject.getString("email"));
             SessionManager.CUSTOMER.setPhone(customerObject.getString("phone"));
             SessionManager.CUSTOMER.setCity(customerObject.getString("city"));
+
             SessionManager.CUSTOMER.setState(customerObject.getString("state"));
             SessionManager.CUSTOMER.setZipcode(customerObject.getString("zip"));
-            if (!customerObject.getString("address2").trim().isEmpty() || customerObject.getString("address2") != null) {
+            if (!customerObject.getString("address2").trim().isEmpty()
+                    && customerObject.getString("address2") != null
+                    && !customerObject.getString("address2").equalsIgnoreCase("")) {
                 SessionManager.CUSTOMER.setStreetLongAddress(customerObject.getString("address2"));
-                sessionManager.saveUserAddress("");
-                sessionManager.saveUserAddress(customerObject.getString("address2") + "," +
-                        customerObject.getString("city") + "," + customerObject.getString("state") + "," + customerObject.getString("zip"));
+                sessionManager.saveUserShortAddress("");
+                sessionManager.saveUserShortAddress(customerObject.getString("address2")  +" "+
+                        customerObject.getString("city")  +" "+ customerObject.getString("state"));
             }
 
-            if (!customerObject.getString("address1").trim().isEmpty() || customerObject.getString("address1") != null) {
+            if (!customerObject.getString("address1").trim().isEmpty()
+                    && customerObject.getString("address1") != null
+                    && !customerObject.getString("address1").equalsIgnoreCase("")) {
                 SessionManager.CUSTOMER.setStreetAddress(customerObject.getString("address1"));
-                sessionManager.saveUserShortAddress("");
-                sessionManager.saveUserShortAddress(customerObject.getString("address1") + "," +
-                        customerObject.getString("city") + "," + customerObject.getString("state") + "," + customerObject.getString("zip"));
+                sessionManager.saveUserAddress("");
+                sessionManager.saveUserAddress(customerObject.getString("address1")  + " "+
+                        customerObject.getString("city") +" " + customerObject.getString("state"));
             }
 
             if (sessionManager.getUserAddress() != null) {
-                mAutocompleteTextView.setText(sessionManager.getUserAddress() + ".");
-            } else {
+                mAutocompleteTextView.setText(sessionManager.getUserAddress());
+            }
+            else {
                 if (sessionManager.getUserShortAddress() != null)
-                    mAutocompleteTextView.setText(sessionManager.getUserShortAddress() + ".");
+                    mAutocompleteTextView.setText(sessionManager.getUserShortAddress());
+                else
+                    mAutocompleteTextView.setText("");
             }
             SessionManager.CUSTOMER.setStarchOnShirtsId(customerObject.getString("starchOnShirts_id"));
 

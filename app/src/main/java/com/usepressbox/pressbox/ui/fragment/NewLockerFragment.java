@@ -151,6 +151,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
             if (promo_code_edittext.getText().toString().length() > 0) {
                 savePromoCodeTask();
             }
+            UtilityClass.hideKeyboard(getActivity());
             return true;
         }
 
@@ -180,7 +181,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
                 params.put("geolocation", new SessionManager(context).getUserGeoLocation());
                 params.put("sessionToken", new SessionManager(context).getSessionToken());
                 params.put("signature", Signature.getUrlConversion(params));
-                ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, "getOrderType");
+                ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, "getOrderType", "NewLockerFragment");
                 confirmOrderTypeTask.ResponseTask();
             }
 
@@ -226,32 +227,75 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
 
         if (new SessionManager(context).getUserShortAddress() != null
                 || new SessionManager(context).getUserAddress() != null) {
+
+            if (new SessionManager(context).getUserShortAddress() != null) {
+                UtilityClass.getLocationFromAddress(new SessionManager(context).getUserShortAddress(), getContext());
+            } else {
+                UtilityClass.getLocationFromAddress(new SessionManager(context).getUserAddress(), getContext());
+            }
+
             String latitude = null;
             String longitude = null;
             String[] splited;
             try {
-                if (new SessionManager(context).getUserShortAddress() != null) {
-                    splited = new SessionManager(context).getUserShortAddress().split(",");
+                if (new SessionManager(context).getUserGeoLocation() != null) {
+                    splited = new SessionManager(context).getUserGeoLocation().split(",");
+
+                    latitude = splited[0];
+                    longitude = splited[1];
+
+
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("token", Constants.TOKEN);
+                    params.put("latitude", latitude);
+                    params.put("longitude", longitude);
+                    params.put("sessionToken", new SessionManager(context).getSessionToken());
+                    params.put("business_id", Constants.BUSINESS_ID);
+                    params.put("signature", Signature.getUrlConversion(params));
+                    ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getNearByLocation(), this, params, "getNearByLocation", "NewLockerFragment");
+                    confirmOrderTypeTask.ResponseTask();
                 } else {
-                    splited = new SessionManager(context).getUserAddress().split(",");
+                    UtilityClass.showAlertWithOk(context, "null", "Please enter your address in account screen", "myaccount");
+
                 }
-                latitude = splited[0];
-                longitude = splited[1];
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put("token", Constants.TOKEN);
-            params.put("latitude", latitude);
-            params.put("longitude", longitude);
-            params.put("sessionToken", new SessionManager(context).getSessionToken());
-            params.put("business_id", Constants.BUSINESS_ID);
-            params.put("signature", Signature.getUrlConversion(params));
-            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getNearByLocation(), this, params, "getNearByLocation");
-            confirmOrderTypeTask.ResponseTask();
         } else {
-            UtilityClass.showAlertWithOk(context, "null", "Please enter your address in account screen", "myaccount");
+            String latitude = null;
+            String longitude = null;
+            if (new SessionManager(context).getCity() != null) {
+                if (new SessionManager(context).getCity().equalsIgnoreCase("Chicago")) {
+                    latitude = Constants.DEFAULT_ADDRESS_CHICAGO_LAT;
+                    longitude = Constants.DEFAULT_ADDRESS_CHICAGO_LONG;
+                } else if (new SessionManager(context).getCity().equalsIgnoreCase("Dallas")) {
+                    latitude = Constants.DEFAULT_ADDRESS_DALLAS_LAT;
+                    longitude = Constants.DEFAULT_ADDRESS_DALLAS_LONG;
+                } else if (new SessionManager(context).getCity().equalsIgnoreCase("DC Metro")) {
+                    latitude = Constants.DEFAULT_ADDRESS_WASHINGTON_LAT;
+                    longitude = Constants.DEFAULT_ADDRESS_WASHINGTON_LONG;
+                } else if (new SessionManager(context).getCity().equalsIgnoreCase("Nashville")) {
+                    latitude = Constants.DEFAULT_ADDRESS_NASHVILLE_LAT;
+                    longitude = Constants.DEFAULT_ADDRESS_NASHVILLE_LONG;
+                } else if (new SessionManager(context).getCity().equalsIgnoreCase("Philadelphia")) {
+                    latitude = Constants.DEFAULT_ADDRESS_PHILADELPHIA_LAT;
+                    longitude = Constants.DEFAULT_ADDRESS_PHILADELPHIA_LONG;
+                }
+
+
+                if(latitude != null && longitude != null) {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("token", Constants.TOKEN);
+                    params.put("latitude", latitude);
+                    params.put("longitude", longitude);
+                    params.put("sessionToken", new SessionManager(context).getSessionToken());
+                    params.put("business_id", Constants.BUSINESS_ID);
+                    params.put("signature", Signature.getUrlConversion(params));
+                    ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getNearByLocation(), this, params, "getNearByLocation", "NewLockerFragment");
+                    confirmOrderTypeTask.ResponseTask();
+                }
+            }
+//            UtilityClass.showAlertWithOk(context, "null", "Please enter your address in account screen", "myaccount");
         }
     }
 
@@ -285,11 +329,9 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
                         hideConciergeView();
                         lockerMatchCase = "Approved Private Locker";
                         find_location__button.setVisibility(View.GONE);
-//                        lockerNumber = null;
                     } else if (locationModel.getLocationType().equalsIgnoreCase("Concierge")
                             || locationModel.getLocationType().equalsIgnoreCase("Offices")) {
                         lockerMatchCase = "Approved doorman";
-//                        lockerNumber = null;
 
                         hideLockerView();
 
@@ -315,15 +357,11 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
                         find_location__button.setVisibility(View.VISIBLE);
                         hideConciergeView();
                         showLockerView();
-//                        lockerNumber = null;
-
                     } else {
                         lockerMatchCase = "Public locker location";
                         find_location__button.setVisibility(View.VISIBLE);
                         hideConciergeView();
                         showLockerView();
-//                        lockerNumber = null;
-
                     }
                 } else {
                     hideConciergeView();
@@ -421,7 +459,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
         params.put("sessionToken", new SessionManager(context).getSessionToken());
 //        params.put("business_id", Constants.BUSINESS_ID);
         params.put("signature", Signature.getUrlConversion(params));
-        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getLockerType(), this, params, "getLockerNumber");
+        ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.getLockerType(), this, params, "getLockerNumber", "NewLockerFragment");
         confirmOrderTypeTask.ResponseTask();
     }
 
@@ -468,7 +506,7 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
             params.put("geolocation", new SessionManager(context).getUserGeoLocation());
             params.put("sessionToken", new SessionManager(context).getSessionToken());
             params.put("signature", Signature.getUrlConversion(params));
-            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, nearByAddress, "getOrderType");
+            ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(context, SessionManager.ORDER.confirmOrderType(), this, params, nearByAddress, "getOrderType", "NewLockerFragment");
             confirmOrderTypeTask.ResponseTask();
         } else {
             UtilityClass.showAlertWithOk(getActivity(), "Alert!", "Please try again", "place-order");
@@ -504,7 +542,10 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
             if (value.toLowerCase().contains("contact support".toLowerCase())) {
                 String replacedString = value.replace("contact support", "");
                 UtilityClass.showAlertWithEmailRedirect(context, "Alert!", replacedString, "null");
-            } else {
+            } else if(value.toLowerCase().contains("If you think this is in error, please call support@usepressbox.com".toLowerCase())) {
+                String replacedString = value.replace("If you think this is in error, please call support@usepressbox.com", "");
+                UtilityClass.showAlertWithEmailRedirect(context, "Alert!", replacedString, "null");
+            }else {
                 UtilityClass.showAlertWithEmailRedirect(context, "Alert!", value, "null");
             }
         }

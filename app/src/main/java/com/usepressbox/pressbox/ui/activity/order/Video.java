@@ -3,6 +3,7 @@ package com.usepressbox.pressbox.ui.activity.order;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebBackForwardList;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -52,7 +55,11 @@ public class Video extends Activity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
         webviewIns=(WebView)findViewById(R.id.webview);
+//        webviewIns.getSettings().setJavaScriptEnabled(true);
         webviewIns.setWebViewClient(new MyBrowser());
+        webviewIns.setWebChromeClient(new WebChromeClient());
+
+
         webviewIns.getSettings().setLoadsImagesAutomatically(true);
         webviewIns.getSettings().setJavaScriptEnabled(true);
         webviewIns.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);

@@ -38,6 +38,7 @@ import com.usepressbox.pressbox.utils.SessionManager;
 import com.usepressbox.pressbox.utils.UtilityClass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -251,7 +252,46 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
 
-        adapter = new SelectservicesAdapter(getActivity(), this, selectoptions);
+
+        ArrayList<String> actualList = new ArrayList<String>();
+        actualList = selectoptions;
+        ArrayList<String> sortedList = new ArrayList<>();
+
+        if (selectoptions != null || selectoptions.size() > 0) {
+//          for (int i = 0; i < selectoptions.size(); i++) {
+
+            if (actualList.contains("Dry Clean & Press")) {
+                sortedList.add("Dry Clean & Press");
+                actualList.remove("Dry Clean & Press");
+            }
+
+            if (actualList.contains("Wash & Fold")) {
+                sortedList.add("Wash & Fold");
+                actualList.remove("Wash & Fold");
+            }
+            if (actualList.contains("Wash and Fold")) {
+                sortedList.add("Wash and Fold");
+                actualList.remove("Wash and Fold");
+            }
+
+            if (actualList.contains("Repairs & Alterations")) {
+                sortedList.add("Repairs & Alterations");
+                actualList.remove("Repairs & Alterations");
+            }
+
+            if (actualList.contains("Shoe Care")) {
+                sortedList.add("Shoe Care");
+                actualList.remove("Shoe Care");
+            }
+
+            for (int i = 0; i < actualList.size(); i++) {
+                sortedList.add(actualList.get(i));
+            }
+
+//          }
+        }
+
+        adapter = new SelectservicesAdapter(getActivity(), this, sortedList);
         recyclerView.setAdapter(adapter);
 
     }
@@ -279,11 +319,11 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
                 transaction.commit();
 
             } else {
-                    Fragment fragment = new NewLockerFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
-                    transaction.replace(R.id.fragment, fragment);
-                    transaction.commit();
+                Fragment fragment = new NewLockerFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.addToBackStack(Constants.BACK_STACK_ROOT_TAG);
+                transaction.replace(R.id.fragment, fragment);
+                transaction.commit();
 
             }
 //            } else {
@@ -313,13 +353,20 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
     }
 
     public void setToolbarTitle() {
-        cancel.setText("Cancel");
+
+        cancel.setText("cancel");
+        next.setText("Skip");
         next.setVisibility(View.INVISIBLE);
         title.setText("New Order");
 
-        if (Constants.register) {
-            cancel.setVisibility(View.INVISIBLE);
+        if (new SessionManager(getContext()).getUserFlow() != null) {
+            if (new SessionManager(getContext()).getUserFlow().equalsIgnoreCase("Register")) {
+                next.setVisibility(View.VISIBLE);
+                cancel.setVisibility(View.INVISIBLE);
+                new SessionManager(getContext()).saveUserFlow("done");
+            }
         }
+
     }
 
     private ArrayList<String> getSelectIds(ArrayList<String> selectlist, ArrayList<HashMap<String, String>> selectvalues) {
@@ -349,7 +396,12 @@ public class SelectServices extends Fragment implements ISelectServiceListener {
         startActivity(toOrder);
         getActivity().finish();
     }
-
+    @OnClick(R.id.toolbar_right)
+    void landingScreen() {
+        Intent toOrder = new Intent(getActivity(), Orders.class);
+        startActivity(toOrder);
+        getActivity().finish();
+    }
 
     @OnClick(R.id.set_order_preference_layout)
     void orderPreference() {

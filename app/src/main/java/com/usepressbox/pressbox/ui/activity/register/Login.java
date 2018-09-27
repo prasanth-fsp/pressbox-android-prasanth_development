@@ -142,7 +142,7 @@ public class Login extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+//        toolbar.setNavigationIcon(R.drawable.back);
         TextView toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toolbar_title.setText(R.string.title_activity_login);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

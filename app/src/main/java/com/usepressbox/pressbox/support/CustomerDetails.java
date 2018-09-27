@@ -36,16 +36,23 @@ public class CustomerDetails {
             SessionManager.CUSTOMER.setEmail(customerObject.getString("email"));
             SessionManager.CUSTOMER.setPhone(customerObject.getString("phone"));
             SessionManager.CUSTOMER.setCity(customerObject.getString("city"));
+            /*Saving into session*/
+            sessionManager.saveCity(customerObject.getString("city"));
+
             SessionManager.CUSTOMER.setState(customerObject.getString("state"));
             SessionManager.CUSTOMER.setZipcode(customerObject.getString("zip"));
-            if(!customerObject.getString("address2").trim().isEmpty() ||  customerObject.getString("address2") != null){
+            if(!customerObject.getString("address2").trim().isEmpty()
+                    ||  customerObject.getString("address2") != null
+                    ||  !customerObject.getString("address2").equalsIgnoreCase("")){
                 SessionManager.CUSTOMER.setStreetLongAddress(customerObject.getString("address2"));
                 sessionManager.saveUserAddress("");
                 sessionManager.saveUserAddress(customerObject.getString("address2")+","+
                         customerObject.getString("city")+","+customerObject.getString("state")+","+customerObject.getString("zip") );
             }
 
-            if (!customerObject.getString("address1").trim().isEmpty() ||  customerObject.getString("address1") != null){
+            if (!customerObject.getString("address1").trim().isEmpty()
+                    ||  customerObject.getString("address1") != null
+                    ||  !customerObject.getString("address1").equalsIgnoreCase("")){
                 SessionManager.CUSTOMER.setStreetAddress(customerObject.getString("address1"));
                 sessionManager.saveUserShortAddress("");
                 sessionManager.saveUserShortAddress(customerObject.getString("address1")+","+

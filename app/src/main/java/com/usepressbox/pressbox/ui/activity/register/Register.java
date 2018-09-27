@@ -59,13 +59,20 @@ import com.usepressbox.pressbox.LandingScreen;
 import com.usepressbox.pressbox.R;
 import com.usepressbox.pressbox.adapter.PlacesArrayAdapter;
 import com.usepressbox.pressbox.asyntasks.BackgroundTask;
+import com.usepressbox.pressbox.asyntasks.ConfirmOrderTypeTask;
 import com.usepressbox.pressbox.asyntasks.SaveUserAddressTask;
+import com.usepressbox.pressbox.interfaces.ISignUpListener;
 import com.usepressbox.pressbox.models.Customer;
+import com.usepressbox.pressbox.models.LocationModel;
+import com.usepressbox.pressbox.models.Order;
 import com.usepressbox.pressbox.support.GPSTracker;
 import com.usepressbox.pressbox.ui.MyAcccount;
 import com.usepressbox.pressbox.ui.TermsAndConditions;
+import com.usepressbox.pressbox.ui.activity.order.NewOrder;
+import com.usepressbox.pressbox.ui.activity.order.Orders;
 import com.usepressbox.pressbox.utils.Constants;
 import com.usepressbox.pressbox.utils.SessionManager;
+import com.usepressbox.pressbox.utils.Signature;
 import com.usepressbox.pressbox.utils.UtilityClass;
 import com.usepressbox.pressbox.utils.ValidateCheckingClass;
 
@@ -74,6 +81,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,7 +96,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class Register extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.ConnectionCallbacks,ISignUpListener {
 
     private Toolbar toolbar;
     private String[] citys;
@@ -365,9 +373,11 @@ public class Register extends AppCompatActivity implements
                                             email.getText().toString(), phone.getText().toString(), password.getText().toString(),
                                             city.getSelectedItem().toString(), -1, "");
                                     saveAddress();
+                                    /*Saving into session*/
+                                    sessionManager.saveCity(city.getSelectedItem().toString());
 
                                     savePromoCode();
-                                    new BackgroundTask(this, SessionManager.CUSTOMER.create(), "register");
+                                    new BackgroundTask(this, SessionManager.CUSTOMER.create(), this,"register");
                                 } else {
                                     Toast.makeText(Register.this, "Please check your network connection", Toast.LENGTH_SHORT).show();
                                 }
@@ -529,6 +539,95 @@ public class Register extends AppCompatActivity implements
     public void onConnectionSuspended(int i) {
         mPlaceArrayAdapter.setGoogleApiClient(null);
     }
+
+
+    @Override
+    public void signUpSuccess(String status) {
+        if(status.equalsIgnoreCase("true"))
+        getOrderType();
+    }
+
+    /*if address match with lockers or kiosk should redirect select service*/
+    @Override
+    public void addressMatchCase(String value, LocationModel locationModel) {
+        switch (value) {
+            case "true":
+                if (!locationModel.getLocationType().equalsIgnoreCase("null")) {
+                    if (locationModel.getLocationType().equalsIgnoreCase("Lockers")) {
+                        sessionManager.saveUserFlow("Register");
+                        Intent newOrder = new Intent(this, NewOrder.class);
+                        newOrder.putExtra("From", "Orders");
+                        startActivity(newOrder);
+                        finish();
+                    } else if (locationModel.getLocationType().equalsIgnoreCase("Concierge")
+                            || locationModel.getLocationType().equalsIgnoreCase("Offices")) {
+                        Intent toLocker = new Intent(this, Intro.class);
+                        startActivity(toLocker);
+                        finish();
+                    } else if (locationModel.getLocationType().equalsIgnoreCase("Kiosk")) {
+                        sessionManager.saveUserFlow("Register");
+                        Intent newOrder = new Intent(this, NewOrder.class);
+                        newOrder.putExtra("From", "Orders");
+                        startActivity(newOrder);
+                        finish();
+
+                    } else {
+
+                        Intent toLocker = new Intent(this, Intro.class);
+                        startActivity(toLocker);
+                        finish();
+                    }
+                } else {
+                    Intent toLocker = new Intent(this, Intro.class);
+                    startActivity(toLocker);
+                    finish();
+                }
+                break;
+            case "false":
+                Intent toLocker = new Intent(this, Intro.class);
+                startActivity(toLocker);
+                finish();
+                break;
+        }
+    }
+
+    private void getOrderType() {
+
+        if (SessionManager.ORDER == null) SessionManager.ORDER = new Order();
+        if (new SessionManager(this).getUserAddress() != null) {
+            if (new SessionManager(this).getUserShortAddress() != null) {
+                UtilityClass.getLocationFromAddress(new SessionManager(this).getUserShortAddress(), this);
+            } else {
+                UtilityClass.getLocationFromAddress(new SessionManager(this).getUserAddress(), this);
+            }
+
+            if (new SessionManager(this).getUserGeoLocation() == null) {
+                Intent toLocker = new Intent(this, Intro.class);
+                startActivity(toLocker);
+                finish();
+//                UtilityClass.showAlertWithOk(this, "Incorrect Address!", "Please enter your complete address", "locker");
+            } else {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("token", Constants.TOKEN);
+                if (new SessionManager(this).getUserShortAddress() != null) {
+                    params.put("address", new SessionManager(this).getUserShortAddress());
+                } else {
+                    params.put("address", new SessionManager(this).getUserAddress());
+                }
+                params.put("geolocation", new SessionManager(this).getUserGeoLocation());
+                params.put("sessionToken", new SessionManager(this).getSessionToken());
+                params.put("signature", Signature.getUrlConversion(params));
+                ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(this, SessionManager.ORDER.confirmOrderType(), this, params, "getOrderType","Register");
+                confirmOrderTypeTask.ResponseTask();
+            }
+
+        } else {
+            Intent toLocker = new Intent(this, Intro.class);
+            startActivity(toLocker);
+            finish();
+        }
+    }
+
 
 
 }

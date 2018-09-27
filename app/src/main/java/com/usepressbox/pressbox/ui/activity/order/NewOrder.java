@@ -35,11 +35,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by kruno on 22.04.16..
+ * Modifed By Prasanth.S on 25/09/2018
  * This class is used for placing new order for existing user in landing screen
  */
 public class NewOrder extends AppCompatActivity {
 
-    private String From ;
+    private String From;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,13 +168,12 @@ public class NewOrder extends AppCompatActivity {
                     newOrder.putExtra("From", "NewOrder");
                     startActivity(newOrder);
                     finish();
-                }
-                else{
+                } else {
                     Intent newOrder = new Intent(NewOrder.this, Orders.class);
                     startActivity(newOrder);
                     finish();
                 }
-            }else{
+            } else {
                 Intent newOrder = new Intent(NewOrder.this, Orders.class);
                 startActivity(newOrder);
                 finish();

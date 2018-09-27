@@ -105,7 +105,7 @@ public class SelectservicesAdapter extends RecyclerView.Adapter<SelectservicesAd
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return (null != mData ? mData.size() : 0);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

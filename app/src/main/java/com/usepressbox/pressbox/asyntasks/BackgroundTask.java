@@ -17,6 +17,7 @@ import com.usepressbox.pressbox.adapter.OrdersAdapter;
 import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
 import com.usepressbox.pressbox.interfaces.IPromoCodeStatusListener;
 import com.usepressbox.pressbox.interfaces.ISelectServiceListener;
+import com.usepressbox.pressbox.interfaces.ISignUpListener;
 import com.usepressbox.pressbox.models.ApiCallParams;
 import com.usepressbox.pressbox.models.GetOrdersModel;
 import com.usepressbox.pressbox.support.CustomProgressDialog;
@@ -60,6 +61,7 @@ public class BackgroundTask {
 
     private CustomProgressDialog progress;
     TextView lblMessage;
+    private ISignUpListener iSignUpListener;
 
     public BackgroundTask(Activity context, ApiCallParams apiCallParams, String tag) {
         this.context = context;
@@ -71,6 +73,16 @@ public class BackgroundTask {
                 (apiCallParams.getTag().equalsIgnoreCase("customers/addCoupon"))) {
             progress = CustomProgressDialog.show(context, false);
         }
+        ResponseTask();
+    }
+
+    public BackgroundTask(Activity context, ApiCallParams apiCallParams, ISignUpListener iSignUpListener, String tag) {
+        this.context = context;
+        this.apiCallParams = apiCallParams;
+        this.tag = tag;
+        this.iSignUpListener = iSignUpListener;
+        progress = CustomProgressDialog.show(context, false);
+
         ResponseTask();
     }
 
@@ -123,6 +135,7 @@ public class BackgroundTask {
 
         ResponseTask();
     }
+
     public BackgroundTask(Activity activity, ApiCallParams apiCallParams, IPromoCodeStatusListener iPromoCodeStatusListener, String from) {
         this.context = activity;
         this.apiCallParams = apiCallParams;
@@ -133,7 +146,6 @@ public class BackgroundTask {
 
         ResponseTask();
     }
-
 
 
     public void ResponseTask() {
@@ -167,7 +179,7 @@ public class BackgroundTask {
                 if (progress != null)
                     progress.dismiss();
 
-                if (tag.equals("orderPreferences") || tag.equals("bleach") || tag.equals("dryerSheets") || tag.equals("softner") || tag.equals("login")  || tag.equalsIgnoreCase("nil")) {
+                if (tag.equals("orderPreferences") || tag.equals("bleach") || tag.equals("dryerSheets") || tag.equals("softner") || tag.equals("login") || tag.equalsIgnoreCase("nil")) {
                 } else {
                     if (progress != null) {
                         if (progress.isShowing())
@@ -184,7 +196,20 @@ public class BackgroundTask {
                             case "customers/create":
                                 sessionManager.saveSessionToken(jsonObject.getJSONObject("data").getString("sessionToken"));
                                 SessionManager.CUSTOMER.setId(jsonObject.getJSONObject("data").getInt("customer_id"));
-                                new BackgroundTask(context, SessionManager.CUSTOMER.updateProfile(context));
+
+                                sessionManager.saveUserName(SessionManager.CUSTOMER.getEmail());
+                                sessionManager.savePassword(SessionManager.CUSTOMER.getPassword());
+
+                                SaveUserAddressTask addressTask = new SaveUserAddressTask(context, SessionManager.CUSTOMER.updateUSerAddress(context), "Register");
+                                addressTask.ResponseTask();
+
+                                if (SessionManager.CUSTOMER.getPromoCode() != "") {
+                                    new SavePromoCodeTask(context, SessionManager.CUSTOMER.savePromoCode(context), "backgroundTask");
+                                }
+                                if(iSignUpListener != null)
+                                    iSignUpListener.signUpSuccess("true");
+
+//                                new BackgroundTask(context, SessionManager.CUSTOMER.updateProfile(context));
                                 break;
 
                             case "customers/updateProfile":
@@ -204,20 +229,6 @@ public class BackgroundTask {
                                 } else {
 
 
-                                    sessionManager.saveUserName(SessionManager.CUSTOMER.getEmail());
-                                    sessionManager.savePassword(SessionManager.CUSTOMER.getPassword());
-
-                                    SaveUserAddressTask addressTask=new SaveUserAddressTask(context,SessionManager.CUSTOMER.updateUSerAddress(context),"Register");
-                                    addressTask.ResponseTask();
-
-                                    Intent toLocker = new Intent(context, Intro.class);
-                                    context.startActivity(toLocker);
-                                    context.finish();
-
-                                    if (SessionManager.CUSTOMER.getPromoCode() != "") {
-
-                                        new BackgroundTask(context, SessionManager.CUSTOMER.savePromoCode(context));
-                                    }
                                 }
                                 break;
 
@@ -256,7 +267,7 @@ public class BackgroundTask {
                                 break;
 
                             case "customers/details":
-                                new CustomerDetails(jsonObject,context);
+                                new CustomerDetails(jsonObject, context);
 
                                 if (tag.equals("orderPreference")) {
 
@@ -307,7 +318,7 @@ public class BackgroundTask {
                                     dataArray.add(model);
                                 }
 
-                                GetOrdersTask getOrdersTask=new GetOrdersTask(context,SessionManager.ORDER.getOrders(context),"BackgroungTask");
+                                GetOrdersTask getOrdersTask = new GetOrdersTask(context, SessionManager.ORDER.getOrders(context), "BackgroungTask");
                                 getOrdersTask.ResponseTask();
                                 adapter.notifyDataSetChanged();
                                 swipe_refresh_layout.setRefreshing(false);

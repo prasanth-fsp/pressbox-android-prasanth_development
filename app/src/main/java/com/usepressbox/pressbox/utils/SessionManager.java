@@ -127,6 +127,25 @@ public class SessionManager {
     public String getLockerNumber() {
         return sharedPreferences.getString("LockerNumber", null);
     }
+
+
+    public String getUserFlow() {
+        return sharedPreferences.getString("userFlow", null);
+    }
+
+
+    public void saveUserFlow(String s){
+        sharedPreferences.edit().putString("userFlow", s).commit();
+    }
+
+    public String getCity() {
+        return sharedPreferences.getString("serviceAvailableCity", null);
+    }
+
+
+    public void saveCity(String s){
+        sharedPreferences.edit().putString("serviceAvailableCity", s).commit();
+    }
     @SuppressLint("CommitPrefEdits")
     public void clearSession(){
 

@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/toolbar"></include>
+        layout="@layout/toolbar_logo"></include>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
+import com.usepressbox.pressbox.interfaces.ISignUpListener;
 import com.usepressbox.pressbox.models.ApiCallParams;
 import com.usepressbox.pressbox.support.CustomProgressDialog;
 import com.usepressbox.pressbox.support.ServerResponse;
@@ -26,28 +27,40 @@ public class ConfirmOrderTypeTask extends AbstractClass {
 
     private Context context;
     private ApiCallParams apiCallParams;
-    private String redirect,nearBylocation;
+    private String tag,nearBylocation,fromScreen;
     private ProgressBar progBar;
     private TextView lblMessage;
     private IConfirmOrderTypeListener iConfirmOrderType;
     private HashMap<String, String> params;
     private CustomProgressDialog progress;
+    private ISignUpListener iSignUpListener;
 
-    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String tag) {
+    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String tag,String fromScreen) {
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.iConfirmOrderType = iConfirmOrderType;
-        this.redirect = tag;
+        this.tag = tag;
         this.params=params;
+        this.fromScreen=fromScreen;
     }
 
-    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String nearBylocation, String tag) {
+    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, ISignUpListener iSignUpListener, HashMap<String, String> params, String tag, String fromScreen) {
+        this.context = context;
+        this.apiCallParams = apiCallParams;
+        this.iSignUpListener = iSignUpListener;
+        this.tag = tag;
+        this.params = params;
+        this.fromScreen = fromScreen;
+    }
+
+    public ConfirmOrderTypeTask(Context context, ApiCallParams apiCallParams, IConfirmOrderTypeListener iConfirmOrderType, HashMap<String, String> params, String nearBylocation, String tag,String fromScreen) {
         this.context = context;
         this.apiCallParams = apiCallParams;
         this.iConfirmOrderType = iConfirmOrderType;
-        this.redirect = tag;
+        this.tag = tag;
         this.nearBylocation=nearBylocation;
         this.params=params;
+        this.fromScreen=fromScreen;
     }
 
 
@@ -71,15 +84,15 @@ public class ConfirmOrderTypeTask extends AbstractClass {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status");
                     if (status.equalsIgnoreCase("success")) {
-                        switch (redirect) {
+                        switch (tag) {
                             case "getLockerNumber":
-                                saveLocationData(context, jsonObject, redirect, iConfirmOrderType,nearBylocation);
+                                saveLocationData(context, jsonObject, tag, iConfirmOrderType,iSignUpListener,nearBylocation,fromScreen);
                                 break;
                             case "getNearByLocation":
-                                saveLocationData(context, jsonObject, redirect, iConfirmOrderType,nearBylocation);
+                                saveLocationData(context, jsonObject, tag, iConfirmOrderType,iSignUpListener,nearBylocation,fromScreen);
                                 break;
                             case "getOrderType":
-                                saveLocationData(context, jsonObject, redirect, iConfirmOrderType,nearBylocation);
+                                saveLocationData(context, jsonObject, tag, iConfirmOrderType,iSignUpListener,nearBylocation,fromScreen);
                                 break;
                         }
 

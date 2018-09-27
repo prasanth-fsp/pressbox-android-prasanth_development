@@ -3,6 +3,7 @@ package com.usepressbox.pressbox.utils;
 import android.content.Context;
 
 import com.usepressbox.pressbox.interfaces.IConfirmOrderTypeListener;
+import com.usepressbox.pressbox.interfaces.ISignUpListener;
 import com.usepressbox.pressbox.models.LocationModel;
 
 import org.json.JSONArray;
@@ -17,7 +18,7 @@ import java.util.Iterator;
 public class AbstractClass {
 
 
-    public void saveLocationData(Context context, JSONObject jsonObject, String from, IConfirmOrderTypeListener iConfirmOrderType, String nearBylocation) {
+    public void saveLocationData(Context context, JSONObject jsonObject, String from, IConfirmOrderTypeListener iConfirmOrderType, ISignUpListener iSignUpListener, String nearBylocation, String fromScreen) {
         switch (from) {
             case "getOrderType":
 
@@ -45,8 +46,13 @@ public class AbstractClass {
                                         && ((sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))
                                         || (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase())))) {
 
-                                            iConfirmOrderType.addressMatchCase("true", locationModel);
-                                            isAddressMachCase = false;
+                                    if(fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                                        iConfirmOrderType.addressMatchCase("true", locationModel);
+                                        isAddressMachCase = false;
+                                    }else {
+                                        iSignUpListener.addressMatchCase("true", locationModel);
+                                        isAddressMachCase = false;
+                                    }
                                     break;
                                 }
 
@@ -57,8 +63,13 @@ public class AbstractClass {
                                             && (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase()))
                                             && (sessionManager.getUserShortAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
 
-                                        iConfirmOrderType.addressMatchCase("true", locationModel);
-                                        isAddressMachCase = false;
+                                        if(fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                                            iConfirmOrderType.addressMatchCase("true", locationModel);
+                                            isAddressMachCase = false;
+                                        }else {
+                                            iSignUpListener.addressMatchCase("true", locationModel);
+                                            isAddressMachCase = false;
+                                        }
                                         break;
                                     }
                                 }else {
@@ -66,8 +77,13 @@ public class AbstractClass {
                                             && (sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("city").toLowerCase()))
                                             && (sessionManager.getUserAddress().toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
 
-                                        iConfirmOrderType.addressMatchCase("true", locationModel);
-                                        isAddressMachCase = false;
+                                        if(fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                                            iConfirmOrderType.addressMatchCase("true", locationModel);
+                                            isAddressMachCase = false;
+                                        }else {
+                                            iSignUpListener.addressMatchCase("true", locationModel);
+                                            isAddressMachCase = false;
+                                        }
                                         break;
                                     }
                                 }
@@ -77,8 +93,13 @@ public class AbstractClass {
                                     && (nearBylocation.toLowerCase().contains(locationObject.optString("city").toLowerCase()))
                                     && (nearBylocation.toLowerCase().contains(locationObject.optString("state").toLowerCase()))) {
 
-                                iConfirmOrderType.addressMatchCase("true", locationModel);
-                                isAddressMachCase = false;
+                                if(fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                                    iConfirmOrderType.addressMatchCase("true", locationModel);
+                                    isAddressMachCase = false;
+                                }else {
+                                    iSignUpListener.addressMatchCase("true", locationModel);
+                                    isAddressMachCase = false;
+                                }
                                 break;
                             }
                         }
@@ -86,12 +107,22 @@ public class AbstractClass {
 
                     }
                     /*UpdateUI*/
-                    if (isAddressMachCase)
-                        iConfirmOrderType.addressMatchCase("false", null);
+                    if (isAddressMachCase) {
+                        if (fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                            iConfirmOrderType.addressMatchCase("false", null);
+                        } else {
+                            iSignUpListener.addressMatchCase("false", null);
+                        }
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    iConfirmOrderType.addressMatchCase("false", null);
+                    if (fromScreen.equalsIgnoreCase("NewLockerFragment")) {
+                        iConfirmOrderType.addressMatchCase("false", null);
+                    } else {
+                        iSignUpListener.addressMatchCase("false", null);
+                    }
+//                    iConfirmOrderType.addressMatchCase("false", null);
 //                    UtilityClass.showAlertWithOk(context, "Alert!", "Please try again", "place-order");
                 }
 
@@ -105,7 +136,8 @@ public class AbstractClass {
                     for (int i = 0; i < locationJsonArray.length(); i++) {
                         JSONObject locationObject = locationJsonArray.optJSONObject(i).optJSONObject("location");
                         if(locationObject.has("locationType")) {
-                            if(locationObject.optString("locationType").equalsIgnoreCase("Concierge")){
+                            if(locationObject.optString("locationType").equalsIgnoreCase("Lockers") ||
+                            (locationObject.optString("locationType").equalsIgnoreCase("Kiosk"))){
                                 LocationModel locationModel = saveLocationModel(locationObject);
                                 locationModelsList.add(locationModel);
                             }

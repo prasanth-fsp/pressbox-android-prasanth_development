@@ -234,18 +234,27 @@ public class Customer {
 
     public ApiCallParams updateProfile(Context context) throws Exception {
 
-        String endpoint = "customers/updateProfile";
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
+        String endpoint = null;
+        String url = null;
+        HashMap<String, String> namevaluepair = null;
+        try {
+            endpoint = "customers/updateProfile";
+            url = ApiUrlGenerator.getApiUrl(endpoint);
 
-        HashMap<String, String> namevaluepair = new HashMap<String, String>();
-        namevaluepair.put("token", Constants.TOKEN);
-        namevaluepair.put("sessionToken", new SessionManager(context).getSessionToken());
-        namevaluepair.put("firstName", name);
-        namevaluepair.put("lastName", lastName);
-        namevaluepair.put("phone", phone);
-        namevaluepair.put("city", city);
-        namevaluepair.put("starchOnShirts_id", starchOnShirtsId);
-        namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
+            namevaluepair = new HashMap<String, String>();
+            namevaluepair.put("token", Constants.TOKEN);
+            namevaluepair.put("sessionToken", new SessionManager(context).getSessionToken());
+            namevaluepair.put("firstName", name);
+            namevaluepair.put("lastName", lastName);
+            namevaluepair.put("phone", phone);
+            if(userCity != null)
+            namevaluepair.put("city", userCity);
+
+            namevaluepair.put("starchOnShirts_id", starchOnShirtsId);
+            namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return new ApiCallParams(namevaluepair, url, endpoint);
     }

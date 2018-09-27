@@ -111,4 +111,10 @@ public class LandingScreen extends AppCompatActivity {
         startActivity(register);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 }

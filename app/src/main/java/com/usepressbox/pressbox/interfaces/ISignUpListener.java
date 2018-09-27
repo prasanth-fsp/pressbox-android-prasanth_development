@@ -1,6 +1,7 @@
 package com.usepressbox.pressbox.interfaces;
 
 import com.usepressbox.pressbox.models.GetOrdersModel;
+import com.usepressbox.pressbox.models.LocationModel;
 
 import java.util.ArrayList;
 
@@ -10,5 +11,7 @@ import java.util.ArrayList;
  */
 
 public interface ISignUpListener {
-    void signUpSuccess(ArrayList<GetOrdersModel> orderTypeModels);
+    void signUpSuccess(String status);
+    void addressMatchCase(String value,LocationModel locationModel);
+
 }
