@@ -64,7 +64,7 @@ public class FireMsgService extends FirebaseMessagingService {
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
         bigText.bigText(message);
         bigText.setBigContentTitle(title);
-        bigText.setSummaryText("By Pressbox");
+        bigText.setSummaryText("By Pressbox by Tide");
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1410, intent,
                 PendingIntent.FLAG_ONE_SHOT);

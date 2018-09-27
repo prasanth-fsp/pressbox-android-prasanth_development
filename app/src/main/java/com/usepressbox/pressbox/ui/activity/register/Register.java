@@ -594,14 +594,14 @@ public class Register extends AppCompatActivity implements
     private void getOrderType() {
 
         if (SessionManager.ORDER == null) SessionManager.ORDER = new Order();
-        if (new SessionManager(this).getUserAddress() != null) {
-            if (new SessionManager(this).getUserShortAddress() != null) {
-                UtilityClass.getLocationFromAddress(new SessionManager(this).getUserShortAddress(), this);
+        if (sessionManager.getUserAddress() != null) {
+            if (sessionManager.getUserShortAddress() != null) {
+                UtilityClass.getLocationFromAddress(sessionManager.getUserShortAddress(), this);
             } else {
-                UtilityClass.getLocationFromAddress(new SessionManager(this).getUserAddress(), this);
+                UtilityClass.getLocationFromAddress(sessionManager.getUserAddress(), this);
             }
 
-            if (new SessionManager(this).getUserGeoLocation() == null) {
+            if (sessionManager.getUserGeoLocation() == null) {
                 Intent toLocker = new Intent(this, Intro.class);
                 startActivity(toLocker);
                 finish();
@@ -609,13 +609,13 @@ public class Register extends AppCompatActivity implements
             } else {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("token", Constants.TOKEN);
-                if (new SessionManager(this).getUserShortAddress() != null) {
-                    params.put("address", new SessionManager(this).getUserShortAddress());
+                if (sessionManager.getUserShortAddress() != null) {
+                    params.put("address",sessionManager.getUserShortAddress());
                 } else {
-                    params.put("address", new SessionManager(this).getUserAddress());
+                    params.put("address",sessionManager.getUserAddress());
                 }
-                params.put("geolocation", new SessionManager(this).getUserGeoLocation());
-                params.put("sessionToken", new SessionManager(this).getSessionToken());
+                params.put("geolocation",sessionManager.getUserGeoLocation());
+                params.put("sessionToken", sessionManager.getSessionToken());
                 params.put("signature", Signature.getUrlConversion(params));
                 ConfirmOrderTypeTask confirmOrderTypeTask = new ConfirmOrderTypeTask(this, SessionManager.ORDER.confirmOrderType(), this, params, "getOrderType","Register");
                 confirmOrderTypeTask.ResponseTask();

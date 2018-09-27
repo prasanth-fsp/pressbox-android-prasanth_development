@@ -247,8 +247,11 @@ public class Customer {
             namevaluepair.put("firstName", name);
             namevaluepair.put("lastName", lastName);
             namevaluepair.put("phone", phone);
-            if(userCity != null)
-            namevaluepair.put("city", userCity);
+            if (userCity == null) {
+                namevaluepair.put("city", city);
+            } else {
+                namevaluepair.put("city", userCity);
+            }
 
             namevaluepair.put("starchOnShirts_id", starchOnShirtsId);
             namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));
@@ -270,30 +273,33 @@ public class Customer {
             namevaluepair = new HashMap<String, String>();
             namevaluepair.put("token", Constants.TOKEN);
             namevaluepair.put("sessionToken", new SessionManager(context).getSessionToken());
-            if(streetAddress!= null)
+            if (streetAddress != null)
                 namevaluepair.put("address1", streetAddress);
 
-            if(streetLongAddress != null)
+            if (streetLongAddress != null)
                 namevaluepair.put("address2", streetLongAddress);
 
-            if(userCity != null)
-            namevaluepair.put("city", userCity);
+            if (userCity == null) {
+                namevaluepair.put("city", city);
+            } else {
+                namevaluepair.put("city", userCity);
+            }
 
-            if(state != null)
-            namevaluepair.put("state", state);
+            if (state != null)
+                namevaluepair.put("state", state);
 
-            if(zipcode != null)
-            namevaluepair.put("zip", zipcode);
+            if (zipcode != null)
+                namevaluepair.put("zip", zipcode);
 
 
-            if(name != null)
-            namevaluepair.put("firstName", name);
+            if (name != null)
+                namevaluepair.put("firstName", name);
 
-            if(lastName != null)
-            namevaluepair.put("lastName", lastName);
+            if (lastName != null)
+                namevaluepair.put("lastName", lastName);
 
-            if(phone != null)
-            namevaluepair.put("phone", phone);
+            if (phone != null)
+                namevaluepair.put("phone", phone);
 
             namevaluepair.put("starchOnShirts_id", starchOnShirtsId);
             namevaluepair.put("signature", Signature.getUrlConversion(namevaluepair));

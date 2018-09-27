@@ -88,14 +88,17 @@ public class OrdersAdapter extends BaseAdapter {
         }
 
 
-        String date = order.getDate();
-        cell.tw_order_row_month.setText(UtilityClass.convertDate(date.split("-")[1]));
-        cell.tw_order_row_date.setText(date.split("-")[2].substring(0, 2));
-
-        cell.tw_order_row_address.setText(order.getAddress());
-        cell.tw_order_row_lockerID.setText(order.getLockerId());
 
         try {
+
+            String date = order.getDate();
+            cell.tw_order_row_month.setText(UtilityClass.convertDate(date.split("-")[1]));
+            cell.tw_order_row_date.setText(date.split("-")[2].substring(0, 2));
+
+            cell.tw_order_row_address.setText(order.getAddress());
+            cell.tw_order_row_lockerID.setText(order.getLockerId());
+
+
             String unlock_code = SessionManager.CUSTOMER.getPhone().substring(SessionManager.CUSTOMER.getPhone().length() - 4);
             cell.tw_unlock_code.setText(unlock_code);
         } catch (Exception e) {

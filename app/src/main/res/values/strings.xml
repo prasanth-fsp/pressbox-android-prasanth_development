@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pressbox</string>
+    <string name="app_name">Pressbox by Tide</string>
     <string name="ok">OK</string>
     <!-- Landing Screen -->
     <string name="pressbox">p r e s s b o x</string>
@@ -159,7 +159,6 @@
     <string name="concierge_order_address_incorret">Address not correct? Tap here</string>
     <string name="find_locker_location">Find a locker location</string>
     <string name="concierge_order_content">Please leave your bag with the doorman or package room before 9 AM.</string>
-
 
 
 </resources>

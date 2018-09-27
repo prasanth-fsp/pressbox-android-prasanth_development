@@ -12,7 +12,7 @@
                 android:color="#FFFF01" />
 
             <solid
-                android:color="#FD5B10" />
+                android:color="@color/Orange_peach" />
 
             <padding
                 android:bottom="10dp"

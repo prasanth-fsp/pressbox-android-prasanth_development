@@ -125,34 +125,13 @@ public class Order {
     }
 
 
-/*    public ApiCallParams confirmOrderType(Context context) {
-
-        String endpoint = "locations/search";
-
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("token", Constants.TOKEN);
-        params.put("address", new SessionManager(context).getUserAddress());
-        params.put("geolocation", new SessionManager(context).getUserGeoLocation());
-
-//        params.put("address","30 Park Avenue");
-//        params.put("geolocation", "41.8829607, -87.63414829999999");
-
-//        params.put("address", "West 2nd Street, KK Nagar, Mellur, Tallakulam, Madurai, Tamil Nadu 625002");
-//        params.put("geolocation", "9.936859, 78.140233");
-
-        params.put("sessionToken", new SessionManager(context).getSessionToken());
-//        params.put("business_id", Constants.BUSINESS_ID);
-        params.put("signature", Signature.getUrlConversion(params));
-        return new ApiCallParams(params, url, endpoint);
-    }*/
 
     public ApiCallParams confirmOrderType() {
 
         String endpoint = "locations/search";
 
-        String url = ApiUrlGenerator.getApiUrl(endpoint);
+//        String url = ApiUrlGenerator.getApiUrl(endpoint);
+        String url ="http://droplocker.com/api/v2_2/locations/search";
 
 
         return new ApiCallParams(null, url, endpoint);

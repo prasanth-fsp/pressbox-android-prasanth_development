@@ -169,7 +169,8 @@ public class NewLockerFragment extends Fragment implements IConfirmOrderTypeList
             }
 
             if (new SessionManager(context).getUserGeoLocation() == null) {
-                UtilityClass.showAlertWithOk(context, "Incorrect Address!", "Please enter your complete address", "locker");
+                this.addressMatchCase("false", null);
+//                UtilityClass.showAlertWithOk(context, "Incorrect Address!", "Please enter your complete address", "locker");
             } else {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("token", Constants.TOKEN);

@@ -7,7 +7,7 @@ public class ApiUrlGenerator {
 
     private static boolean isInTestMode =false;
     public static String BASE_URL_PRODUCTION = "http://droplocker.com/api/v2_2/";
-    public static String BASE_URL_TEST = "http://mobilesandbox.droplocker.com/api/v2_2/";
+    public static String BASE_URL_TEST = "http://mobilesandbox.droplocker.com/api/v2_0/";
 
     public static String getApiUrl(String endpoint) {
 

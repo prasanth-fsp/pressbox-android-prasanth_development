@@ -39,6 +39,7 @@ public class Constants {
     public static String DEFAULT_ADDRESS_PHILADELPHIA_LAT="39.945736";
     public static String DEFAULT_ADDRESS_PHILADELPHIA_LONG="-75.141313";
 
+    public static int SPLASH_TIME_OUT = 2000;
 
 
     public static boolean register = false;
