@@ -281,7 +281,7 @@ public class MyAcccount extends AppCompatActivity implements
             GetUserAddressTask getUserAddressTask = new GetUserAddressTask(this, this, SessionManager.CUSTOMER.details(this), "Myaccount");
             getUserAddressTask.ResponseTask();
         } else {
-            UtilityClass.showAlertWithOk(this, "Incorrect Address!", "Please check your internet connection", "locker");
+            UtilityClass.showAlertWithOk(this, "Alert!", "Please check your internet connection", "locker");
 
         }
     }
